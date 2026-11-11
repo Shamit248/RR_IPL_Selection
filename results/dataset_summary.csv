@@ -1,0 +1,7 @@
+dataset,rows,columns,unique_id,null_cells,null_pct,duplicates,date_range
+competitions,141,4,141,0,0.0,0,
+teams,353,3,38,0,0.0,0,
+matches,883,22,883,2736,14.08,0,2022-01-22 to 2026-11-01
+playing_eleven,28381,9,1082,26012,10.18,0,
+comp_map,6413,6,1217,0,0.0,0,
+ball_by_ball,200999,33,867,766466,11.56,0,

@@ -1,0 +1,11 @@
+weakness_rank,weakness_category,weakness_type,weakness_metric,rr_value,ipl_avg,gap,severity,weakness_score,required_phase,required_matchup,required_situation,primary_metric,primary_threshold,required_pressure_min,required_roles,priority_weight
+1,Death_Pressure,bowling,wkts_per_over,0.4,0.52,-0.12,CRITICAL,0.852,All,N/A,Pressure,wkts_per_over,>= 0.52,Must beat IPL pressure avg,"['Death bowler', 'Middle-over bowler']",0.852
+2,High_RRR,batting,dot_pct,40.95,34.47,6.48,CRITICAL,0.833,All,N/A,High_RRR,dot_pct,<= 34.5,Must beat IPL pressure avg,"['Finisher', 'Middle-order batter']",0.833
+3,Phase_DEATH,batting,boundary_pct,20.64,23.84,-3.2,CRITICAL,0.777,DEATH,N/A,N/A,boundary_pct,>= 23.8,Must beat IPL pressure avg,"['Finisher', 'Middle-order batter']",0.777
+4,HighRRR_Bowling,bowling,wkts_per_over,0.33,0.38,-0.05,CRITICAL,0.723,All,N/A,N/A,wkts_per_over,>= 0.38,Must beat IPL pressure avg,['Middle-over bowler'],0.723
+5,vs_LHB,bowling,boundary_pct,26.56,23.7,2.86,CRITICAL,0.706,All,N/A,N/A,boundary_pct,better than 23.70,Must beat IPL pressure avg,['Middle-over bowler'],0.706
+6,Pressure_HIGH_EXTREME,bowling,wkts_per_over,0.41,0.45,-0.04,CRITICAL,0.678,All,N/A,Pressure,wkts_per_over,>= 0.45,Must beat IPL pressure avg,"['Death bowler', 'Middle-over bowler']",0.678
+7,Phase_MIDDLE,batting,dot_pct,31.67,29.53,2.14,CRITICAL,0.678,MIDDLE,N/A,N/A,dot_pct,<= 29.5,Must beat IPL pressure avg,"['Middle-order batter', 'Batting all-rounder']",0.678
+8,Phase_DEATH,bowling,wkts_per_over,0.43,0.46,-0.03,CRITICAL,0.676,DEATH,N/A,N/A,wkts_per_over,>= 0.46,Must beat IPL pressure avg,"['Death bowler', 'Fast bowler']",0.676
+12,Phase_MIDDLE,bowling,economy,9.14,8.92,0.22,CRITICAL,0.602,MIDDLE,N/A,N/A,economy,<= 8.92,Must beat IPL pressure avg,"['Middle-over bowler', 'Spinner', 'Bowling all-rounder']",0.602
+13,Post_Wicket,batting,boundary_pct,16.06,17.15,-1.09,SIGNIFICANT,0.592,All,N/A,Post_Wicket,boundary_pct,>= 17.1,Must beat IPL pressure avg,"['Middle-order batter', 'Finisher']",0.592
