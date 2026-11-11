@@ -87,6 +87,7 @@ bowl_metrics = load_csv(os.path.join(OUT_DIR, 'player_bowling_metrics.csv'), 'pl
 pressure_metrics = load_csv(os.path.join(OUT_DIR, 'pressure_player_metrics.csv'), 'pressure_player_metrics')
 reliability = load_csv(os.path.join(OUT_DIR, 'player_reliability.csv'), 'player_reliability')
 role_analysis = load_csv(os.path.join(OUT_DIR, 'player_role_analysis.csv'), 'player_role_analysis')
+player_status = load_csv(os.path.join(OUT_DIR, 'player_status.csv'), 'player_status')
 comp_map = load_csv(os.path.join(OUT_DIR, 'competition_team_player_mapping.csv'), 'competition_team_player_mapping')
 
 # If comp_map not in results, try data_pack
@@ -164,8 +165,25 @@ if not players_csv.empty:
 
 all_players['player_name'] = all_players['player_name'].fillna('UNKNOWN')
 
-# --- Availability: UNKNOWN for all ---
-all_players['availability_status'] = 'UNKNOWN'
+# --- Merge Player Eligibility & Playing Status Layer (Phases 20-21 / Correction) ---
+if not player_status.empty:
+    status_cols = ['player_id', 'current_active_status', 'retirement_status', 'ipl_2027_status', 'status_source', 'status_date', 'eligibility_reason', 'final_eligible']
+    all_players = all_players.merge(
+        player_status[[c for c in status_cols if c in player_status.columns]].drop_duplicates(subset=['player_id']),
+        on='player_id',
+        how='left'
+    )
+    all_players['current_active_status'] = all_players['current_active_status'].fillna('UNKNOWN')
+    all_players['retirement_status'] = all_players['retirement_status'].fillna('UNKNOWN')
+    all_players['ipl_2027_status'] = all_players['ipl_2027_status'].fillna('UNKNOWN')
+    all_players['final_eligible'] = all_players['final_eligible'].fillna('UNKNOWN')
+    all_players['availability_status'] = all_players['ipl_2027_status']
+else:
+    all_players['current_active_status'] = 'UNKNOWN'
+    all_players['retirement_status'] = 'UNKNOWN'
+    all_players['ipl_2027_status'] = 'UNKNOWN'
+    all_players['final_eligible'] = 'UNKNOWN'
+    all_players['availability_status'] = 'UNKNOWN'
 
 # --- Nationality & age: UNKNOWN / None ---
 all_players['nationality'] = 'UNKNOWN'
@@ -1182,13 +1200,15 @@ print("=" * 70)
 print("SECTION 7 — Rankings (Phases 29–30)")
 print("=" * 70)
 
-# Non-RR candidates only (exclude RR 2026 squad)
+# Non-RR candidates only: exclude RR 2026 squad, require min data, and require IPL 2027 eligibility (Population B)
+is_eligible = (all_players['final_eligible'] == 'TRUE') if 'final_eligible' in all_players.columns else True
 candidates = all_players[
     (~all_players['rr_squad_2026']) &
-    (all_players['has_min_data'])
+    (all_players['has_min_data']) &
+    is_eligible
 ].copy()
 
-print(f"  Candidate pool (non-RR, has data): {len(candidates):,}")
+print(f"  Candidate pool (non-RR, has data, eligible): {len(candidates):,}")
 
 # Sort by RR_FIT_SCORE
 candidates = candidates.sort_values('RR_FIT_SCORE', ascending=False).reset_index(drop=True)
@@ -1235,13 +1255,13 @@ candidates['primary_reason'] = candidates.apply(build_primary_reason, axis=1)
 # Output schema
 output_cols = [
     'rank', 'player_id', 'player_name', 'determined_role',
-    'nationality', 'age', 'availability_status',
+    'nationality', 'age', 'availability_status', 'ipl_2027_status', 'current_active_status',
     'RR_FIT_SCORE', 'pressure_score', 'weakness_fit_score',
     'reliability_norm', 'ipl_performance_score', 'recent_form_score',
     'venue_fit_score', 'upside_score', 'confidence_norm',
     'primary_weakness_addressed', 'primary_reason', 'risk_level',
     'rr_squad_2026', 'is_young', 'played_for_RR_ever',
-    'first_ipl_season', 'seasons_in_ipl'
+    'first_ipl_season', 'seasons_in_ipl', 'eligibility_reason'
 ]
 
 # Deduplicate column names if confidence_score or reliability_score already exist

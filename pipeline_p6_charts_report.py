@@ -224,7 +224,7 @@ if not ppm_df.empty and 'normal_SR' in ppm_df.columns and 'pressure_SR' in ppm_d
     ax.plot(lims, lims, 'r--', label='Parity (Normal SR = Pressure SR)', linewidth=1.5)
 
     # Highlight top targets
-    top_targets = ['Ashutosh Sharma', 'Naman Dhir', 'Tim David', 'Dinesh Karthik', 'Nicholas Pooran', 'Heinrich Klaasen', 'Rinku Singh']
+    top_targets = ['Ashutosh Sharma', 'Naman Dhir', 'Tim David', 'Nicholas Pooran', 'Heinrich Klaasen', 'Rinku Singh', 'Sunil Narine']
     for _, row in batters.iterrows():
         if row['player_name'] in top_targets:
             ax.scatter(row['normal_SR'], row['pressure_SR'], color=RR_PINK, s=120, edgecolors='black', zorder=5)
