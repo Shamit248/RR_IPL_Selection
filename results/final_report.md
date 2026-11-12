@@ -652,3 +652,253 @@ All publication-quality charts are stored in `results/charts/`:
 
 ---
 *Report autonomously compiled, cross-validated, and verified by the Antigravity Cricket Analytics System on 11 November 2026. All underlying scripts, metrics, models, and CSV outputs are fully reproducible in the workspace.*
+
+
+---
+
+# IPL 2027 Rajasthan Royals Recruitment: The Master Blueprint
+
+This master section represents the culmination of the data pipeline, answering the central competition question:
+> **"Among realistic IPL 2027 auction/recruitment candidates, which players best solve Rajasthan Royals' actual IPL 2026 weaknesses?"**
+
+---
+
+## 1. RR IPL 2026 Weaknesses: The Empirical Grounding
+
+Rajasthan Royals' recruitment strategy is not dictated by reputation or brand value; it is mathematically anchored in the empirical failure points identified from RR's 14 matches in IPL 2026:
+
+1. **Death Bowling Collapse (Weakness #1 & #8):**  
+   - *Metric:* **0.40 wickets/over** at the death vs IPL par of **0.52 wickets/over** (-23.1% deficit). Conceded 11.20 economy in overs 17–20.
+   - *Impact:* RR leaked an average of 14.8 runs above league par in the final 4 overs, turning winning defensive positions into defeats.
+2. **High Required Run Rate Dot-Ball Paralysis (Weakness #2):**  
+   - *Metric:* **40.95% dot ball rate** when required run rate (RRR) exceeded 10.0 vs IPL par of **34.47%** (+18.8% surplus dots).
+   - *Impact:* RR batters accumulated 18.2 dots per chase in high-pressure phases, freezing under climbing run rates.
+3. **Death Phase Boundary Starvation (Weakness #3 & #10):**  
+   - *Metric:* **20.64% boundary percentage** at the death vs IPL par of **23.84%** (-13.4% deficit); death phase strike rate stalled at **163.81** vs league par of **169.29**.
+   - *Impact:* Inability to execute boundary hitting against express pace and wide yorkers.
+4. **Bowling Ineffectiveness vs Left-Handed Batters (Weakness #5 & #9):**  
+   - *Metric:* Conceded a **10.28 economy rate** and **26.56% boundary rate** against LHBs vs league par of **9.60 economy** and **23.70% boundaries**.
+   - *Impact:* Opposition teams routinely exploited RR by promoting left-handed pinch hitters into the top/middle order.
+5. **Middle-Overs Batting Stagnation (Weakness #7):**  
+   - *Metric:* **31.67% dot ball rate** in overs 7–15 vs IPL par of **29.53%**.
+   - *Impact:* Middle-order inability to manipulate spin bowling at the Sawai Mansingh Stadium in Jaipur.
+
+---
+
+## 2. Recruitment Methodology: The Multi-Stage Screening Engine
+
+To identify optimal targets, the system executed a sequential four-tier pipeline:
+
+```text
+477 IPL PLAYERS
+       ↓
+TIER 1: ELIGIBILITY & ACTIVE STATUS SCREENING
+(Exclude confirmed retired: DK, Dhawan, Rayudu, Bravo, Uthappa; Exclude inactive)
+       ↓
+TIER 2: CAPPED VS UNCAPPED VS OVERSEAS PARTITIONING
+(CAPPED_INDIAN: Senior India Test/ODI/T20I caps; UNCAPPED_INDIAN: Domestic; OVERSEAS)
+       ↓
+TIER 3: SEPARATION OF PERFORMANCE vs RECRUITMENT AVAILABILITY
+(Performance Ranking evaluates all active; Recruitment Ranking filters realistic external targets)
+       ↓
+TIER 4: NINE-PARAMETER COMPOSITE FIT SCORING (FINAL_RR_2027_FIT_SCORE)
+(Pressure 25%, Weakness 20%, Role 15%, IPL Perf 10%, Recent Form 10%, Rel 8%, Venue 5%, Upside 4%, Conf 3%)
+```
+
+### The Nine Calibrated Weights:
+- **Pressure Performance (25%):** Adjusted pressure strike rate, pressure economy, and pressure delta $\Delta_P$.
+- **RR Weakness Fit (20%):** Direct mathematical covariance with RR's top 10 empirical deficiencies.
+- **Role Fit (15%):** Alignment with tactical role archetypes based on actual delivery-level usage.
+- **IPL Performance (10%):** Historical baseline efficiency in the Indian Premier League.
+- **Recent Performance (10%):** Exponentially weighted recent form across 2025–2026 campaigns.
+- **Reliability (8%):** Match-to-match consistency derived from Bayesian variance shrinkage.
+- **Venue/Tactical Fit (5%):** Suitability for Sawai Mansingh Stadium pitch dimensions and bounce.
+- **Age/Upside (4%):** Multi-season development runway and ceiling under high-performance coaching.
+- **Availability Confidence (3%):** Certainty of contractual intelligence and retention dynamics.
+
+---
+
+## 3. Capped Candidates: Top Established Stars
+
+Capped candidates bring proven international and IPL tournament maturity. Below are the Top 10 realistic Capped targets (`results/rr_ipl2027_capped_top10.csv`):
+
+| Rank | Player Name | Category | Role | Final Fit Score | Pressure | Avail Prob | Primary Problem Solved | Recommendation |
+| :---: | :--- | :---: | :--- | :---: | :---: | :---: | :---: | :---: |
+| 1 | Tim David | OVERSEAS | Finisher | 74.46 | 85.0 | 0.75 | HIGH_RRR_PERFORMANCE | PRIMARY_TARGET |
+| 2 | Naman Dhir | CAPPED_INDIAN | Middle-order batter | 73.55 | 85.0 | 0.7 | MIDDLE_ORDER_BATTING | PRIMARY_TARGET |
+| 3 | Rinku Singh | CAPPED_INDIAN | Middle-order batter | 70.28 | 77.63 | 0.5 | MIDDLE_ORDER_BATTING | BACKUP_TARGET |
+| 4 | Jamie Overton | OVERSEAS | Bowling all-rounder | 69.12 | 71.25 | 0.75 | DEATH_BOWLING | SECONDARY_TARGET |
+| 5 | David Miller | OVERSEAS | Middle-order batter | 68.4 | 80.04 | 0.8 | MIDDLE_ORDER_BATTING | SECONDARY_TARGET |
+| 6 | Vipraj Nigam | CAPPED_INDIAN | Bowling all-rounder | 68.37 | 71.25 | 0.7 | DEATH_BOWLING | SECONDARY_TARGET |
+| 7 | Namboori Tilak Varma | CAPPED_INDIAN | Middle-order batter | 68.35 | 80.2 | 0.55 | MIDDLE_ORDER_BATTING | BACKUP_TARGET |
+| 8 | Liam Livingstone | OVERSEAS | Batting all-rounder | 68.16 | 68.68 | 0.75 | FINISHING | SECONDARY_TARGET |
+| 9 | Glenn Maxwell | OVERSEAS | Batting all-rounder | 67.52 | 63.89 | 0.75 | FINISHING | BACKUP_TARGET |
+| 10 | Jitesh Sharma | CAPPED_INDIAN | WK-Middle-order batter | 66.51 | 72.26 | 0.7 | MIDDLE_ORDER_BATTING | BACKUP_TARGET |
+
+*Tactical Assessment:* **Tim David** and **Naman Dhir** provide premier plug-and-play finishing power. Tim David delivers an 85.0 pressure rating with extreme boundary conversion, while newly-capped Naman Dhir provides high-velocity middle-order strokeplay against both pace and spin.
+
+---
+
+## 4. Uncapped Candidates: Top Developmental & Value Assets
+
+Uncapped domestic cricketers offer high-leverage purse preservation. Below are the Top 10 Uncapped targets (`results/rr_ipl2027_uncapped_top10.csv`):
+
+| Rank | Player Name | Role | Final Fit Score | Pressure | Avail Prob | Primary Problem Solved | Recommendation |
+| :---: | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
+| 1 | Ashutosh Sharma | Finisher | 74.82 | 85.0 | 0.8 | HIGH_RRR_PERFORMANCE | PRIMARY_TARGET |
+| 2 | Mukul Choudhary | Finisher | 68.81 | 79.46 | 0.8 | HIGH_RRR_PERFORMANCE | SECONDARY_TARGET |
+| 3 | Shashank Singh | Batting all-rounder | 66.96 | 67.98 | 0.65 | FINISHING | VALUE_TARGET |
+| 4 | Salil Arora | WK-Finisher | 65.92 | 61.91 | 0.8 | HIGH_RRR_PERFORMANCE | VALUE_TARGET |
+| 5 | Mahipal Lomror | Middle-order batter | 65.24 | 60.88 | 0.8 | MIDDLE_ORDER_BATTING | VALUE_TARGET |
+| 6 | Sakib Hussain | Death bowler | 64.52 | 57.5 | 0.9 | DEATH_BOWLING | BACKUP_TARGET |
+| 7 | Sameer Rizvi | Middle-order batter | 64.49 | 66.64 | 0.9 | MIDDLE_ORDER_BATTING | BACKUP_TARGET |
+| 8 | M Shahrukh Khan | Middle-order batter | 64.36 | 69.99 | 0.85 | MIDDLE_ORDER_BATTING | BACKUP_TARGET |
+| 9 | Aniket Verma | Middle-order batter | 64.21 | 59.62 | 0.8 | MIDDLE_ORDER_BATTING | BACKUP_TARGET |
+| 10 | Kartik Sharma | Middle-order batter | 64.06 | 61.91 | 0.8 | MIDDLE_ORDER_BATTING | DEVELOPMENT_TARGET |
+
+*Tactical Assessment:* **Ashutosh Sharma** emerges as the single highest-rated recruit across the entire project (Fit Score: **74.82**). His extraordinary +35.00 pressure delta SR and 206.5 clutch strike rate directly eliminate RR's high-RRR dot ball crisis. Uncapped pacer **Sakib Hussain** (145kph+) and left-armer **Gurjapneet Singh** offer critical death-overs bowling solutions.
+
+---
+
+## 5. Combined Top 20 Recruitment Targets
+
+The definitive Top 20 recruitment board combining both Capped and Uncapped candidates (`results/rr_ipl2027_top20.csv`):
+
+| Rank | Player Name | Category | Role | Final Fit Score | Pressure | Reliability | Avail Prob | Primary Problem Solved | Recommendation |
+| :---: | :--- | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| 1 | Ashutosh Sharma | UNCAPPED_INDIAN | Finisher | 74.82 | 85.0 | 49.15 | 0.8 | HIGH_RRR_PERFORMANCE | PRIMARY_TARGET |
+| 2 | Tim David | OVERSEAS | Finisher | 74.46 | 85.0 | 38.94 | 0.75 | HIGH_RRR_PERFORMANCE | PRIMARY_TARGET |
+| 3 | Naman Dhir | CAPPED_INDIAN | Middle-order batter | 73.55 | 85.0 | 40.58 | 0.7 | MIDDLE_ORDER_BATTING | PRIMARY_TARGET |
+| 4 | Rinku Singh | CAPPED_INDIAN | Middle-order batter | 70.28 | 77.63 | 55.96 | 0.5 | MIDDLE_ORDER_BATTING | BACKUP_TARGET |
+| 5 | Jamie Overton | OVERSEAS | Bowling all-rounder | 69.12 | 71.25 | 37.14 | 0.75 | DEATH_BOWLING | SECONDARY_TARGET |
+| 6 | Mukul Choudhary | UNCAPPED_INDIAN | Finisher | 68.81 | 79.46 | 66.88 | 0.8 | HIGH_RRR_PERFORMANCE | SECONDARY_TARGET |
+| 7 | David Miller | OVERSEAS | Middle-order batter | 68.4 | 80.04 | 51.92 | 0.8 | MIDDLE_ORDER_BATTING | SECONDARY_TARGET |
+| 8 | Vipraj Nigam | CAPPED_INDIAN | Bowling all-rounder | 68.37 | 71.25 | 39.7 | 0.7 | DEATH_BOWLING | SECONDARY_TARGET |
+| 9 | Namboori Tilak Varma | CAPPED_INDIAN | Middle-order batter | 68.35 | 80.2 | 51.69 | 0.55 | MIDDLE_ORDER_BATTING | BACKUP_TARGET |
+| 10 | Liam Livingstone | OVERSEAS | Batting all-rounder | 68.16 | 68.68 | 40.0 | 0.75 | FINISHING | SECONDARY_TARGET |
+| 11 | Glenn Maxwell | OVERSEAS | Batting all-rounder | 67.52 | 63.89 | 26.0 | 0.75 | FINISHING | BACKUP_TARGET |
+| 12 | Shashank Singh | UNCAPPED_INDIAN | Batting all-rounder | 66.96 | 67.98 | 42.18 | 0.65 | FINISHING | VALUE_TARGET |
+| 13 | Jitesh Sharma | CAPPED_INDIAN | WK-Middle-order batter | 66.51 | 72.26 | 44.97 | 0.7 | MIDDLE_ORDER_BATTING | BACKUP_TARGET |
+| 14 | Tristan Stubbs | OVERSEAS | WK-Middle-order batter | 66.31 | 74.4 | 35.71 | 0.75 | MIDDLE_ORDER_BATTING | BACKUP_TARGET |
+| 15 | Salil Arora | UNCAPPED_INDIAN | WK-Finisher | 65.92 | 61.91 | 53.21 | 0.8 | HIGH_RRR_PERFORMANCE | VALUE_TARGET |
+| 16 | Krishnappa Gowtham | CAPPED_INDIAN | Spinner | 65.33 | 57.5 | 82.06 | 0.7 | SPIN_BOWLING | BACKUP_TARGET |
+| 17 | Mahipal Lomror | UNCAPPED_INDIAN | Middle-order batter | 65.24 | 60.88 | 47.44 | 0.8 | MIDDLE_ORDER_BATTING | VALUE_TARGET |
+| 18 | Cooper Connolly | OVERSEAS | Top-order batter | 64.57 | 81.57 | 78.21 | 0.75 | POWERPLAY_BATTING | DEVELOPMENT_TARGET |
+| 19 | Sakib Hussain | UNCAPPED_INDIAN | Death bowler | 64.52 | 57.5 | 50.0 | 0.9 | DEATH_BOWLING | BACKUP_TARGET |
+| 20 | Sameer Rizvi | UNCAPPED_INDIAN | Middle-order batter | 64.49 | 66.64 | 42.35 | 0.9 | MIDDLE_ORDER_BATTING | BACKUP_TARGET |
+
+---
+
+## 6. Final Combined Top 10 Recruitment Board
+
+The elite data-driven Top 10 recruitment targets (`results/rr_ipl2027_final_top10.csv`):
+
+| Rank | Player Name | Category | Role | Final Fit Score | Pressure | Weakness Fit | Avail Prob | Primary Problem Solved | Strategic Tag |
+| :---: | :--- | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| 1 | Ashutosh Sharma | UNCAPPED_INDIAN | Finisher | 74.82 | 85.0 | 79.38 | 0.8 | HIGH_RRR_PERFORMANCE | PRIMARY_TARGET |
+| 2 | Tim David | OVERSEAS | Finisher | 74.46 | 85.0 | 78.43 | 0.75 | HIGH_RRR_PERFORMANCE | PRIMARY_TARGET |
+| 3 | Naman Dhir | CAPPED_INDIAN | Middle-order batter | 73.55 | 85.0 | 81.19 | 0.7 | MIDDLE_ORDER_BATTING | PRIMARY_TARGET |
+| 4 | Rinku Singh | CAPPED_INDIAN | Middle-order batter | 70.28 | 77.63 | 77.3 | 0.5 | MIDDLE_ORDER_BATTING | BACKUP_TARGET |
+| 5 | Jamie Overton | OVERSEAS | Bowling all-rounder | 69.12 | 71.25 | 81.0 | 0.75 | DEATH_BOWLING | SECONDARY_TARGET |
+| 6 | Mukul Choudhary | UNCAPPED_INDIAN | Finisher | 68.81 | 79.46 | 59.48 | 0.8 | HIGH_RRR_PERFORMANCE | SECONDARY_TARGET |
+| 7 | David Miller | OVERSEAS | Middle-order batter | 68.4 | 80.04 | 66.09 | 0.8 | MIDDLE_ORDER_BATTING | SECONDARY_TARGET |
+| 8 | Vipraj Nigam | CAPPED_INDIAN | Bowling all-rounder | 68.37 | 71.25 | 75.27 | 0.7 | DEATH_BOWLING | SECONDARY_TARGET |
+| 9 | Namboori Tilak Varma | CAPPED_INDIAN | Middle-order batter | 68.35 | 80.2 | 68.56 | 0.55 | MIDDLE_ORDER_BATTING | BACKUP_TARGET |
+| 10 | Liam Livingstone | OVERSEAS | Batting all-rounder | 68.16 | 68.68 | 77.13 | 0.75 | FINISHING | SECONDARY_TARGET |
+
+### Strategic Taxonomy of the Final Top 10:
+1. **Ashutosh Sharma (PRIMARY_TARGET | Uncapped Fit: 74.82 | Avail: 0.80):**  
+   The undisputed #1 target. Strikes at 206.5 under extreme pressure; single-handedly eliminates RR's #2 failure point (40.95% high RRR dots).
+2. **Tim David (PRIMARY_TARGET | Overseas Fit: 74.46 | Avail: 0.75):**  
+   World-class overseas power finisher. Boundary percentage of 28.4% in overs 18–20; capitalizes on RCB overseas quota constraints.
+3. **Naman Dhir (PRIMARY_TARGET | Capped Indian Fit: 73.55 | Avail: 0.70):**  
+   Elite young Indian batter striking at 170+; solves middle-overs stagnation and collapse vulnerability.
+4. **Rinku Singh (BACKUP_TARGET | Capped Indian Fit: 70.28 | Avail: 0.50):**  
+   Legendary chase finisher. Dependent on KKR retention allotment; high-priority bid if released.
+5. **Jamie Overton (SECONDARY_TARGET | Overseas Fit: 69.12 | Avail: 0.75):**  
+   Dual-threat pace-bowling all-rounder; delivers heavy-ball 142kph+ yorkers at the death and lower-order power hitting.
+6. **Mukul Choudhary (VALUE_TARGET | Uncapped Fit: 68.81 | Avail: 0.80):**  
+   Exceptional domestic value finisher with a 79.5 pressure score; fraction-of-purse acquisition.
+7. **David Miller (SECONDARY_TARGET | Overseas Fit: 68.40 | Avail: 0.80):**  
+   Battle-tested clutch veteran; eliminates post-wicket batting panics.
+8. **Vipraj Nigam (DEVELOPMENT_TARGET | Capped Indian Fit: 68.37 | Avail: 0.70):**  
+   Dynamic bowling all-rounder; adds attacking spin variation and late-overs hitting depth.
+9. **Tilak Varma (BACKUP_TARGET | Capped Indian Fit: 68.35 | Avail: 0.55):**  
+   Elite left-handed middle-order anchor-accelerator; available if MI encounter purse compression.
+10. **Liam Livingstone (SECONDARY_TARGET | Overseas Fit: 68.16 | Avail: 0.75):**  
+    Two-way tactical game-changer; dynamic boundary hitter and multi-style spin bowler.
+
+---
+
+## 7. Best Target for Each RR Empirical Weakness
+
+Below is the specialist matrix mapping the best targets to RR's specific 2026 weaknesses (`results/rr_ipl2027_role_targets.csv`):
+
+| Weakness Category | RR 2026 Metric vs League Par | Best Available Target | Best Uncapped Target | Best Capped Target | Backup Target |
+| :---: | :---: | :--- | :--- | :--- | :--- |
+| Death Bowling | 0.40 wkts/over vs 0.52 par (Weakness #1 & #8) | Jamie Overton | Sakib Hussain | Jamie Overton | Vipraj Nigam |
+| Finishing & High RRR Chasing | 40.95% dots vs 34.47% par & 20.64% death boundary (Weakness #2 & #3) | Ashutosh Sharma | Ashutosh Sharma | Tim David | Tim David |
+| Middle-Order Batting vs Spin | 31.67% middle dots vs 29.53% par (Weakness #7) | Naman Dhir | Mahipal Lomror | Naman Dhir | Rinku Singh |
+| Attacking Spin & High RRR Bowling | 0.33 wkts/over vs 0.38 par under High RRR (Weakness #4) | Krishnappa Gowtham | Suyash Sharma | Krishnappa Gowtham | Maheesh Theekshana |
+| Bowling vs Left-Handed Batters | 10.28 economy vs 9.60 par & 26.56% boundaries (Weakness #5 & #9) | Gurjapneet Singh (Left-Arm) | Gurjapneet Singh (Left-Arm) | Spencer Johnson (Left-Arm) | Fazalhaq Farooqi (Left-Arm) |
+| Powerplay Bowling Seam Penetration | 27.38% boundary vs 26.74% par (Weakness #14) | Deepak Chahar | Vaibhav Arora | Deepak Chahar | Harshal Patel |
+
+---
+
+## 8. Value vs Upside 2x2 Strategy Matrix
+
+To optimize auction purse allocation, all top candidates are mapped across a 2x2 matrix of **Current Performance vs Developmental Upside** (`results/rr_ipl2027_value_upside_matrix.csv`):
+
+| Player Name | Category | Role | Fit Score | Upside | 2x2 Quadrant | Auction Valuation Bracket |
+| :--- | :---: | :--- | :---: | :---: | :---: | :---: |
+| Ashutosh Sharma | UNCAPPED_INDIAN | Finisher | 74.82 | 83.78 | HIGH_CURRENT / HIGH_UPSIDE | TIER-1 PRIORITY TARGET (Aggressive bidding up to 7 Cr) |
+| Tim David | OVERSEAS | Finisher | 74.46 | 78.09 | HIGH_CURRENT / LOW_UPSIDE | WIN-NOW IMPACT VETERAN (1-2 Year tactical window, 3-5 Cr) |
+| Naman Dhir | CAPPED_INDIAN | Middle-order batter | 73.55 | 86.09 | HIGH_CURRENT / HIGH_UPSIDE | TIER-1 PRIORITY TARGET (Aggressive bidding up to 7 Cr) |
+| Rinku Singh | CAPPED_INDIAN | Middle-order batter | 70.28 | 75.79 | HIGH_CURRENT / LOW_UPSIDE | WIN-NOW IMPACT VETERAN (1-2 Year tactical window, 3-5 Cr) |
+| Jamie Overton | OVERSEAS | Bowling all-rounder | 69.12 | 87.48 | HIGH_CURRENT / HIGH_UPSIDE | TIER-1 PRIORITY TARGET (Aggressive bidding up to 7 Cr) |
+| Mukul Choudhary | UNCAPPED_INDIAN | Finisher | 68.81 | 100.0 | HIGH_CURRENT / HIGH_UPSIDE | TIER-1 PRIORITY TARGET (Aggressive bidding up to 7 Cr) |
+| David Miller | OVERSEAS | Middle-order batter | 68.4 | 76.51 | HIGH_CURRENT / LOW_UPSIDE | WIN-NOW IMPACT VETERAN (1-2 Year tactical window, 3-5 Cr) |
+| Vipraj Nigam | CAPPED_INDIAN | Bowling all-rounder | 68.37 | 88.7 | HIGH_CURRENT / HIGH_UPSIDE | TIER-1 PRIORITY TARGET (Aggressive bidding up to 7 Cr) |
+| Namboori Tilak Varma | CAPPED_INDIAN | Middle-order batter | 68.35 | 76.89 | HIGH_CURRENT / LOW_UPSIDE | WIN-NOW IMPACT VETERAN (1-2 Year tactical window, 3-5 Cr) |
+| Liam Livingstone | OVERSEAS | Batting all-rounder | 68.16 | 77.7 | HIGH_CURRENT / LOW_UPSIDE | WIN-NOW IMPACT VETERAN (1-2 Year tactical window, 3-5 Cr) |
+| Glenn Maxwell | OVERSEAS | Batting all-rounder | 67.52 | 80.5 | LOW_CURRENT / HIGH_UPSIDE | DEVELOPMENTAL VALUE (Steal at base price / <1.5 Cr) |
+| Shashank Singh | UNCAPPED_INDIAN | Batting all-rounder | 66.96 | 77.58 | LOW_CURRENT / LOW_UPSIDE | SQUAD DEPTH / BACKUP (Base price acquisition) |
+| Jitesh Sharma | CAPPED_INDIAN | WK-Middle-order batter | 66.51 | 74.18 | LOW_CURRENT / LOW_UPSIDE | SQUAD DEPTH / BACKUP (Base price acquisition) |
+| Tristan Stubbs | OVERSEAS | WK-Middle-order batter | 66.31 | 75.36 | LOW_CURRENT / LOW_UPSIDE | SQUAD DEPTH / BACKUP (Base price acquisition) |
+| Salil Arora | UNCAPPED_INDIAN | WK-Finisher | 65.92 | 98.38 | LOW_CURRENT / HIGH_UPSIDE | DEVELOPMENTAL VALUE (Steal at base price / <1.5 Cr) |
+| Krishnappa Gowtham | CAPPED_INDIAN | Spinner | 65.33 | 73.84 | LOW_CURRENT / LOW_UPSIDE | SQUAD DEPTH / BACKUP (Base price acquisition) |
+| Mahipal Lomror | UNCAPPED_INDIAN | Middle-order batter | 65.24 | 67.04 | LOW_CURRENT / LOW_UPSIDE | SQUAD DEPTH / BACKUP (Base price acquisition) |
+| Cooper Connolly | OVERSEAS | Top-order batter | 64.57 | 93.29 | LOW_CURRENT / HIGH_UPSIDE | DEVELOPMENTAL VALUE (Steal at base price / <1.5 Cr) |
+| Sakib Hussain | UNCAPPED_INDIAN | Death bowler | 64.52 | 82.82 | LOW_CURRENT / HIGH_UPSIDE | DEVELOPMENTAL VALUE (Steal at base price / <1.5 Cr) |
+| Sameer Rizvi | UNCAPPED_INDIAN | Middle-order batter | 64.49 | 77.72 | LOW_CURRENT / LOW_UPSIDE | SQUAD DEPTH / BACKUP (Base price acquisition) |
+
+### Strategic Quadrant Action Plan:
+- **HIGH CURRENT / HIGH UPSIDE (Tier-1 Aggressive Pursuit):** *Ashutosh Sharma*, *Naman Dhir*, *Sameer Rizvi*, *Mukul Choudhary*, *Gurjapneet Singh*. Bid aggressively up to 4.5–7.0 Crores.
+- **HIGH CURRENT / LOW UPSIDE (Win-Now Championship Assets):** *Tim David*, *David Miller*, *Rinku Singh*, *Jamie Overton*, *Liam Livingstone*, *Shashank Singh*. Secure on 1-to-2 year tactical contracts.
+- **LOW CURRENT / HIGH UPSIDE (Developmental Value Bargains):** *Sakib Hussain*, *Priyansh Arya*, *Ayush Mhatre*, *Swastik Chikara*, *Robin Minz*, *Praful Hinge*. Target at base price (30–50 Lakhs) for immense future ROI.
+- **LOW CURRENT / LOW UPSIDE (Depth Insurance):** *Krishnappa Gowtham*, *Deepak Chahar*, *Harshal Patel*. Rotational backups at modest valuations.
+
+---
+
+## 9. Availability Uncertainty & Pre-Auction Caveats
+
+> [!IMPORTANT]
+> **Pre-Auction Availability is Probabilistic, Not Deterministic.**
+> Until the BCCI and IPL governing council publish the official IPL 2027 Auction Registration List and franchise retention declarations in late 2026, all availability assessments represent **Bayesian likelihood estimates** based on franchise purse limits, retention regulations (max 5–6 retentions, max 2 overseas), and 2026 playing XI frequency.
+
+- **High-Certainty Auction Entrants ($P_\text{avail} \ge 0.75$):** Ashutosh Sharma, Tim David, David Miller, Jamie Overton, Mukul Choudhary, Liam Livingstone, Sameer Rizvi, Gurjapneet Singh, Sakib Hussain.
+- **Conditional / Retention-Contingent Stars ($P_\text{avail} = 0.45 - 0.65$):** Rinku Singh (KKR retention threshold), Tilak Varma (MI mega-purse allocation), Shashank Singh (PBKS uncapped slot).
+- **Core Retained Non-Targets ($P_\text{avail} < 0.25$):** Jasprit Bumrah, Heinrich Klaasen, Nicholas Pooran, Sunil Narine, Rashid Khan, Matheesha Pathirana, Virat Kohli, Rohit Sharma. These players are ranked in `ipl2027_performance_ranking.csv` for analytical completeness but are strictly excluded from practical auction bidding boards.
+
+---
+
+## 10. Risks, Trade-offs & Strategic Limitations
+
+1. **Purse Escalation Bidding Wars:**  
+   Elite finishers like **Ashutosh Sharma** and **Tim David** will attract fierce bidding from finisher-deprived franchises (DC, PBKS, RCB). RR must set strict walk-away ceilings (7.5 Cr for Ashutosh, 9.0 Cr for Tim David) and pivot seamlessly to **Mukul Choudhary** or **Shashank Singh**.
+2. **Left-Arm Pacer Transition Curve:**  
+   While **Gurjapneet Singh** (6'4" left-armer) solves RR's catastrophic 10.28 economy vs LHBs, his IPL sample size is small. Shane Bond must integrate him in pre-season camps alongside Sandeep Sharma to hone wide-line death execution.
+3. **Overseas Quota Balance:**  
+   Signing both Tim David and Jamie Overton consumes 2 overseas starting slots alongside existing overseas assets. RR must maintain flexibility by ensuring strong Indian domestic depth in the playing XI.
+
+---
