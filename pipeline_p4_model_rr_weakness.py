@@ -68,6 +68,10 @@ rr26 = load_or_warn(f'{OUT}/rr_ipl_2026_matches.csv', 'rr_ipl_2026_matches')
 # Type coercions
 pf['is_ipl']   = pf['is_ipl'].astype(bool)
 pf['is_legal'] = pf['is_legal'].astype(bool)
+if 'season' not in pf.columns:
+    comps = pd.read_csv(f'{DATA}/competitions.csv')
+    comp_map = comps.set_index('comp_id')['season'].to_dict()
+    pf['season'] = pf['comp_id'].map(comp_map).fillna(pd.to_datetime(pf['match_date'], errors='coerce').dt.year)
 pf['season']   = pf['season'].astype(str).str[:4]
 
 ipl     = pf[pf['is_ipl']].copy()

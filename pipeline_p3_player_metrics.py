@@ -166,24 +166,33 @@ ipl["pressure_category"]       = ipl["pressure_category"].astype(str)
 # Safest: exclude run-outs of non-striker
 def compute_batter_out(df):
     """Return boolean Series: True if striker was dismissed on this delivery."""
-    # dismissed_player_id matches striker_id (most cases)
-    # OR dismissed_player_id is NaN (assume striker)
-    # AND it is not "Run Out" of somebody else
-    dismissed = pd.to_numeric(df["dismissed_player_id"], errors="coerce")
-    striker   = pd.to_numeric(df["striker_id"], errors="coerce")
-    is_wkt    = df["is_wicket"].astype(bool)
+    dismissed_col = "dismissed_player_id" if "dismissed_player_id" in df.columns else ("player_out_id" if "player_out_id" in df.columns else None)
+    if dismissed_col:
+        dismissed = pd.to_numeric(df[dismissed_col], errors="coerce")
+    else:
+        dismissed = pd.Series(np.nan, index=df.index)
+
+    striker_col = "striker_id" if "striker_id" in df.columns else ("batter_id" if "batter_id" in df.columns else None)
+    if striker_col:
+        striker = pd.to_numeric(df[striker_col], errors="coerce")
+    else:
+        striker = pd.Series(np.nan, index=df.index)
+
+    is_wkt = df["is_wicket"].astype(bool)
 
     # Non-striker run out: dismissed_player_id != striker_id AND dismissal_type == 'Run Out'
     runout_col = None
-    for c in ["dismissal_type", "dismissal_type_id"]:
+    for c in ["dismissal_type", "dismissal_type_id", "wicket_kind"]:
         if c in df.columns:
             runout_col = c
             break
 
-    if runout_col and runout_col == "dismissal_type":
+    if runout_col and runout_col in ["dismissal_type", "wicket_kind"]:
         non_striker_ro = (
             is_wkt &
-            (df["dismissal_type"].str.lower().str.contains("run out", na=False)) &
+            (df[runout_col].astype(str).str.lower().str.contains("run out", na=False)) &
+            (dismissed.notna()) &
+            (striker.notna()) &
             (dismissed != striker)
         )
     else:

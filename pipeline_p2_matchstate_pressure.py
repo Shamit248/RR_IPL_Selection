@@ -95,6 +95,13 @@ matches_sub = matches[avail_meta].drop_duplicates(subset=['match_id'])
 bbb = bbb.merge(matches_sub, on='match_id', how='left', suffixes=('', '_meta'))
 print(f"    After merging match metadata: {len(bbb):,} rows")
 
+# --- Map season ---
+if 'comp_id' in comps.columns and 'season' in comps.columns:
+    comp_season_map = comps.set_index('comp_id')['season'].to_dict()
+    bbb['season'] = bbb['comp_id'].map(comp_season_map)
+else:
+    bbb['season'] = pd.to_datetime(bbb['match_date'], errors='coerce').dt.year
+
 # --- Flags: IPL and T20I ---
 bbb['is_ipl'] = bbb['comp_id'].isin(IPL_COMP_IDS).astype(int)
 # T20I competitions are identified by competition type; use a reasonable heuristic
@@ -504,11 +511,13 @@ print("=" * 70)
 # --- Define which columns belong to match state features ---
 # Original columns that came from ball_by_ball.csv
 orig_bbb_cols = [
-    'match_id', 'innings', 'innings_ball_num', 'overid', 'ball_num',
-    'batter_id', 'non_striker_id', 'bowler_id', 'batting_team_id',
-    'bowling_team_id', 'runs', 'extras_2_runs', 'extras_type',
-    'is_wicket', 'wicket_kind', 'player_out_id',
-    'is_four', 'is_six',
+    'match_id', 'innings', 'innings_ball_num', 'overid', 'ball_num', 'over_ball_num',
+    'striker_id', 'striker_name', 'non_striker_id', 'non_striker_name',
+    'bowler_id', 'bowler_name', 'batting_team_id', 'bowling_team_id',
+    'runs', 'extras_2_runs', 'extras_type',
+    'is_wicket', 'dismissal_type_id', 'dismissal_type', 'dismissed_player_id',
+    'is_four', 'is_six', 'batting_type', 'bowling_type', 'batting_order',
+    'pace_or_spin', 'bowl_speed', 'stroke', 'delivery_style', 'over_or_around', 'on_or_off',
     'batter_runs',
 ]
 # Keep only columns that actually exist
@@ -516,7 +525,7 @@ orig_bbb_cols = [c for c in orig_bbb_cols if c in bbb.columns]
 
 # Match metadata columns
 meta_cols = [c for c in [
-    'match_date', 'comp_id', 'venue_id', 'stage',
+    'match_date', 'season', 'comp_id', 'venue_id', 'stage',
     'home_team_id', 'away_team_id',
     'first_inn_revised_overs', 'second_inn_revised_overs',
     'revised_target', 'win_team_id', 'knock_out',
