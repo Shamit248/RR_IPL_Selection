@@ -3,6 +3,75 @@
 
 ---
 
+## 🏛️ EXECUTIVE ARCHITECTURE & METHODOLOGY FLOWCHART
+
+```mermaid
+flowchart TD
+    subgraph Data["1. Multi-Source Raw Data Ingestion (2022–2026)"]
+        D1["Ball-by-Ball Data (200,999 Deliveries)"]
+        D2["Match Metadata & Venue Records"]
+        D3["Squads, Playing XIs & Player Profiles"]
+    end
+
+    subgraph State["2. Dynamic Match State Reconstruction"]
+        S1["Pre-Delivery State (Score, Wickets Lost, Balls Left)"]
+        S2["Innings Phase Split: Powerplay, Middle, Death"]
+        S3["Chase Context: Target, Runs Required, Real-Time RRR"]
+    end
+
+    subgraph Pressure["3. 6-Factor Continuous Pressure Index (PI: 0–100)"]
+        P1["P1: Target / RRR Urgency (Weight: 30%)"]
+        P2["P2: Delivery Resource Depletion (Weight: 20%)"]
+        P3["P3: Wicket Loss Vulnerability (Weight: 20%)"]
+        P4["P4: Match Closeness / Leverage (Weight: 10%)"]
+        P5["P5: Phase Criticality Multiplier (Weight: 10%)"]
+        P6["P6: Recent Momentum & Micro-Collapse (Weight: 10%)"]
+        PI["Continuous Pressure Index: High Pressure PI > 65"]
+    end
+
+    subgraph Metrics["4. Differential Performance & Bayesian Reliability"]
+        M1["Batting Metrics (Pressure SR, Delta SR vs Baseline, Avg, Boundary %)"]
+        M2["Bowling Metrics (Pressure Econ, Delta Econ Suppression, Wkt/Over, Dot %)"]
+        M3["Bayesian Shrinkage (Kb = 30) Adjusting Small-Sample Outliers"]
+    end
+
+    subgraph Validation["5. ML Validation & Diagnostics"]
+        V1["XGBoost & Logistic Regression Win Prob Models (AUC: 0.781)"]
+        V2["Temporal Out-of-Time Backtesting (Trained 2022-24, Tested 2025-26)"]
+        V3["Rajasthan Royals IPL 2026 Statistical Weakness Profiling"]
+    end
+
+    subgraph Eligibility["6. Player Eligibility & Status Layer"]
+        E1["1,217 Players Audited: Active vs Retired vs Contracted"]
+        E2["Exclusion of Retired / Ineligible Stars (e.g., Karthik, Dhawan)"]
+        E3["Availability Probability Matrix (0.0 to 1.0)"]
+    end
+
+    subgraph Recruitment["7. Strategic Recruitment & Optimization Engine"]
+        R1["Uncapped Indian Talent Scouting (High-Upside Gems)"]
+        R2["Capped & Overseas Auction Targets"]
+        R3["Direct Role-Specific Mapping to Solve RR 2026 Gaps"]
+    end
+
+    subgraph Outputs["8. Deliverables & Decision Support Assets"]
+        O1["Top 10 Batters & Bowlers Under Pressure (Unstop Dropdowns)"]
+        O2["Rajasthan Royals IPL 2027 Final Top 10"]
+        O3["Value vs Upside 2x2 Auction Matrix"]
+        O4["Publication Reports & 10 Diagnostic Charts"]
+    end
+
+    Data --> State
+    State --> Pressure
+    P1 & P2 & P3 & P4 & P5 & P6 --> PI
+    PI --> Metrics
+    Metrics --> Validation
+    Validation --> Eligibility
+    Eligibility --> Recruitment
+    Recruitment --> Outputs
+```
+
+---
+
 ## 01. PLAYER RANKINGS (UNSTOP DROPDOWN SELECTIONS)
 
 Submit both ranked lists using the player-selection dropdowns on Unstop. Rank 1 represents the highest-rated player in each category.
