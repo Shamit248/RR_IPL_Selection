@@ -1,0 +1,3 @@
+Role,Total_Survived,Model_1_Count,Model_2_Count,Model_3_Count,Silent_NaNs,Eligibility_Threshold
+Batters,113,113,113,113,0,">= 120 HP balls, active >= 2025-01-01, non-Pak, non-retired"
+Bowlers,123,123,123,123,0,">= 120 HP balls, active >= 2025-01-01, non-Pak, non-retired"

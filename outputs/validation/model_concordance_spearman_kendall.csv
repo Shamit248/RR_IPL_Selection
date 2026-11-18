@@ -1,0 +1,13 @@
+Role,Pair,Spearman_Rho,Kendall_Tau
+Batters,M1_Context vs M2_Delta,0.6727,0.4883
+Batters,M1_Context vs M3_Consistency,0.7947,0.6007
+Batters,M1_Context vs Ensemble,0.92,0.762
+Batters,M2_Delta vs M3_Consistency,0.5698,0.4016
+Batters,M2_Delta vs Ensemble,0.8649,0.6783
+Batters,M3_Consistency vs Ensemble,0.8463,0.6579
+Bowlers,M1_Context vs M2_Delta,0.6024,0.4237
+Bowlers,M1_Context vs M3_Consistency,0.7029,0.518
+Bowlers,M1_Context vs Ensemble,0.9057,0.7428
+Bowlers,M2_Delta vs M3_Consistency,0.4536,0.309
+Bowlers,M2_Delta vs Ensemble,0.8139,0.6202
+Bowlers,M3_Consistency vs Ensemble,0.8072,0.6105

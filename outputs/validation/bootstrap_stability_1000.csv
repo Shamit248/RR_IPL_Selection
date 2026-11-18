@@ -1,0 +1,21 @@
+Role,Player_Name,Final_Rank,Top10_Frequency_Pct,CI_95_Lower,CI_95_Upper
+Batter,Suryakumar Yadav,1,100.0,1.0,1.0
+Batter,Ishan Kishan,2,100.0,2.0,3.0
+Batter,Prabhsimran Singh,3,100.0,2.0,6.0
+Batter,Abhishek Sharma,4,100.0,3.0,7.0
+Batter,Andre Russell,5,100.0,3.0,6.0
+Batter,Tim David,6,99.9,5.0,9.0
+Batter,Shai Hope,7,97.7,4.0,10.0
+Batter,Dhruv Jurel,8,98.5,6.0,10.0
+Batter,Mark Chapman,9,94.6,6.0,12.0
+Batter,Liam Livingstone,10,29.0,9.0,17.0
+Bowler,Mayank Yadav,1,100.0,1.0,6.0
+Bowler,Jamie Overton,2,100.0,1.0,6.0
+Bowler,Sunil Narine,3,100.0,1.0,6.0
+Bowler,Matheesha Pathirana,4,100.0,1.0,6.0
+Bowler,Jasprit Bumrah,5,100.0,1.0,6.0
+Bowler,Varun Chakravarthy,6,100.0,3.0,8.0
+Bowler,Wanindu Hasaranga,7,99.9,6.0,10.0
+Bowler,Mitchell Santner,8,99.8,6.0,10.0
+Bowler,Roston Chase,9,93.8,6.0,11.0
+Bowler,Taskin Ahmed,10,64.3,8.0,13.0
