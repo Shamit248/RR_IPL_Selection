@@ -1,0 +1,7 @@
+,score_model_1,score_model_2,score_model_3,equal_weight_z_score,weighted_z_score,rrf_score
+score_model_1,1.0,0.6727,0.7947,0.9141,0.92,0.924
+score_model_2,0.6727,1.0,0.5698,0.8479,0.8649,0.8334
+score_model_3,0.7947,0.5698,1.0,0.8774,0.8463,0.8682
+equal_weight_z_score,0.9141,0.8479,0.8774,1.0,0.9971,0.9845
+weighted_z_score,0.92,0.8649,0.8463,0.9971,1.0,0.9833
+rrf_score,0.924,0.8334,0.8682,0.9845,0.9833,1.0

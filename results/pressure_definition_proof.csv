@@ -1,0 +1,3 @@
+Pressure_Zone,Deliveries,Pct_of_Dataset,Scoring_Economy,Wickets_Per_Over,Dot_Ball_Pct,Boundary_Pct
+Normal / Baseline Zone (PI < 0.65),143570,71.44,8.5,0.29,35.32,17.82
+High-Pressure Zone (PI >= 0.65),57391,28.56,9.44,0.46,30.16,18.29

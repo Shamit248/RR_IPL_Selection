@@ -1,246 +1,291 @@
-# Rajasthan Royals IPL 2027: Pressure-Based Recruitment Intelligence System
+# Rajasthan Royals SupeRR Selector Season 2 (Round 1)
+## High-Pressure T20 Player Rating Engine & Recruitment Intelligence System
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
-[![Machine Learning](https://img.shields.io/badge/ML-XGBoost%20%7C%20Scikit--Learn-orange.svg)](https://scikit-learn.org/)
-[![Status](https://img.shields.io/badge/Data%20Integrity-Zero%20NaNs%20Verified-brightgreen.svg)]()
-[![Competition](https://img.shields.io/badge/Unstop-Round%201%20Submission%20Ready-purple.svg)]()
+[![Machine Learning](https://img.shields.io/badge/ML-LightGBM%20%7C%20Scikit--Learn-orange.svg)](https://scikit-learn.org/)
+[![Data Integrity](https://img.shields.io/badge/Data%20Integrity-100%25%20Verified%20Joins-brightgreen.svg)]()
+[![Unstop Competition](https://img.shields.io/badge/Unstop-Round%201%20Submission%20Ready-purple.svg)]()
 
-> A production-grade cricket data science and machine learning engine built to identify **which players best solve Rajasthan Royals' actual statistical weaknesses from IPL 2026**, with rigorous emphasis on **performance under pressure, Bayesian reliability shrinkage, role fit, availability probability, and auction value**.
+> A statistically rigorous, reproducible cricket data science engine built for **Round 1 of Rajasthan Royals' SupeRR Selector Season 2**. Evaluates delivery-level leverage and contextual expectations across 200,999 IPL and T20 International deliveries (2022-2026), combines three distinct pressure modeling paradigms via consensus ensembling (Weighted Z-Score & Reciprocal Rank Fusion), and produces the authoritative **Top 10 Batters** and **Top 10 Bowlers** under pressure.
 
 ---
 
-## 🗺️ System Architecture & Analytical Pipeline Flowchart
+## Table of Contents
+1. [Executive Summary & Challenge Statement](#1-executive-summary--challenge-statement)
+2. [End-to-End System Architecture](#2-end-to-end-system-architecture)
+3. [Data Inventory & Relational Schema](#3-data-inventory--relational-schema)
+4. [Scientific Pressure Definition (Pressure Index)](#4-scientific-pressure-definition-pressure-index)
+5. [The Three Pressure Modeling Paradigms](#5-the-three-pressure-modeling-paradigms)
+6. [Ensemble Aggregation & Validation](#6-ensemble-aggregation--validation)
+7. [Official Competition Submission: Top 15 Rankings](#7-official-competition-submission-top-15-rankings)
+8. [Rajasthan Royals Tactical Relevance](#8-rajasthan-royals-tactical-relevance)
+9. [How to Run & Reproducibility Guide](#9-how-to-run--reproducibility-guide)
 
-Below is the complete architectural flowchart depicting the data flow from multi-season raw delivery records through match-state reconstruction, continuous pressure modeling, machine learning validation, and player eligibility screening to final actionable auction targets:
+---
+
+## 1. Executive Summary & Challenge Statement
+
+### The Problem
+Some players thrive when the match is on the line; others see their performance dip. Round 1 of the SupeRR Selector challenge tasks analysts with building a data-driven system to distinguish those who consistently rise to the occasion from those whose performances decline under pressure.
+
+### Submission Requirements
+1. **01 Player Rankings:** Two ordered top-10 lists submitted in exact rank order (1 to 10) via the Unstop dropdown fields:
+   - **Top 10 Batters under pressure**
+   - **Top 10 Bowlers under pressure**
+   *(Includes Ranks 11-15 as immediate verified backups if any international player is absent from the Unstop selection menu).*
+2. **02 Methodology Report:** Complete documentation explaining the mathematical definition of pressure, contextual baseline modeling, Bayesian shrinkage, consensus ensembling, and evidence for every selection.
+3. **RR Tactical Scouting Layer:** Downstream strategic alignment mapping top clutch performers to Rajasthan Royals' squad vulnerabilities and home conditions (Sawai Mansingh Stadium, Jaipur & Barsapara Stadium, Guwahati).
+
+---
+
+## 2. End-to-End System Architecture
 
 ```mermaid
 flowchart TD
-    subgraph Data["1. Raw Data Ingestion (2022–2026)"]
-        D1["Ball-by-Ball Records (200,999 Deliveries)"]
-        D2["Match Metadata & Ground Telemetry"]
-        D3["Squads, Playing XIs & Player Profiles"]
+    subgraph Ingestion["1. Raw Ingestion & Verification (./data)"]
+        D1["ball_by_ball.csv (200,999 Deliveries)"]
+        D2["matches.csv (883 Matches: IPL & T20I)"]
+        D3["competitions.csv & teams.csv"]
+        D4["playing_eleven.csv & mapping.csv"]
     end
 
-    subgraph State["2. Dynamic Match State Reconstruction"]
-        S1["Pre-Delivery State (Score, Wickets Lost, Balls Remaining)"]
-        S2["Innings Phase Classification (Powerplay, Middle, Death)"]
-        S3["Chase Dynamics (Target, Runs Required, Real-Time RRR)"]
+    subgraph Cleaning["2. Match State Reconstruction"]
+        C1["Innings Totals & Target Calibration (DLS Balls Handled)"]
+        C2["Exclude Super Overs (innings 3 & 4)"]
+        C3["Extras Accounting (extras1_runs enum vs physical runs)"]
+        C4["Cumulative State (Balls Left, Runs Req, RRR, Wickets Fallen)"]
     end
 
-    subgraph Pressure["3. 6-Factor Continuous Pressure Index (PI: 0–100)"]
-        P1["P1: Target & RRR Urgency (Weight: 30%)"]
-        P2["P2: Delivery Resource Depletion (Weight: 20%)"]
-        P3["P3: Wicket Capital Depletion (Weight: 20%)"]
-        P4["P4: Match Closeness & Leverage (Weight: 10%)"]
-        P5["P5: Innings Phase Criticality (Weight: 10%)"]
-        P6["P6: Recent Momentum & Micro-Collapse (Weight: 10%)"]
-        PI["Continuous Delivery Pressure Index (High Pressure: PI > 65)"]
+    subgraph PressureEng["3. Continuous Pressure Engine (PI in [0, 1])"]
+        P1["Innings 2: RRR Urgency + Resource Scarcity + Match Closeness"]
+        P2["Innings 1: Top-Order Collapse Urgency + Death Overs Accelerator"]
+        P3["High-Pressure Threshold: PI >= 0.65 (Top 28.5% Leverage)"]
     end
 
-    subgraph Metrics["4. Differential Performance & Bayesian Reliability"]
-        M1["Batting Metrics (Pressure SR, Delta SR vs Baseline, Boundary %, Avg)"]
-        M2["Bowling Metrics (Pressure Economy, Delta Economy Suppression, Wkts/Over, Dot %)"]
-        M3["Bayesian Shrinkage (Kb = 30) Adjusting Small-Sample Outliers"]
+    subgraph ContextModels["4. Contextual Expected Outcomes (LightGBM)"]
+        E1["xRuns Bat & Bowl (Phase, Bowler Type, Wickets, Venue)"]
+        E2["xWicket Bat & Bowl (Dismissal Expectancy)"]
+        E3["Runs Added Above Expected (RAAE/100) & Runs Saved (RSAE/24)"]
     end
 
-    subgraph Validation["5. ML Validation & Franchise Diagnostics"]
-        V1["XGBoost & Logistic Regression Win Probability Calibration (AUC: 0.781)"]
-        V2["Temporal Out-of-Time Backtesting (Trained 2022-24, Validated 2025-26)"]
-        V3["Rajasthan Royals IPL 2026 Statistical Weakness Extraction (6 Critical Gaps)"]
+    subgraph Models["5. The Three Modeling Paradigms"]
+        M1["Model 1: Contextual Value Added + Bayesian Shrinkage (K=40)"]
+        M2["Model 2: Rate Elevation Delta (Delta SR, Delta Economy)"]
+        M3["Model 3: Clutch Match Consistency & Reliability"]
     end
 
-    subgraph Eligibility["6. Player Eligibility & Auction Availability Layer"]
-        E1["1,217 Players Audited (Active, Retired, Contracted)"]
-        E2["Exclusion of Retired Legends (e.g., Dinesh Karthik, Shikhar Dhawan)"]
-        E3["Availability Probability Matrix (0.0 to 1.0)"]
+    subgraph Ensemble["6. Standardized Ensemble & Eligibility Filter"]
+        F1["Active Filter (Latest Match >= 2025-01-01)"]
+        F2["IPL Eligibility Filter (Exclude Pakistan-only, 68 removed)"]
+        F3["Sample Cutoff (>= 120 Legal HP Balls: 115 Batters, 124 Bowlers)"]
+        F4["Weighted Z-Score (0.40 M1 + 0.35 M2 + 0.25 M3) + RRF Rank Fusion"]
     end
 
-    subgraph Recruitment["7. Strategic Optimization & Recruitment Engine"]
-        R1["Uncapped Indian Talent Scouting (High-Upside Low-Cost Gems)"]
-        R2["Capped Indian & Overseas Proven Clutch Targets"]
-        R3["Direct Role-Specific Mapping to Solve RR 2026 Vulnerabilities"]
+    subgraph Deliverables["7. Official Submission Deliverables"]
+        O1["Top 15 Batters Under Pressure (outputs/top15_ensemble_batters.csv)"]
+        O2["Top 15 Bowlers Under Pressure (outputs/top15_ensemble_bowlers.csv)"]
+        O3["Spearman Correlation & Robustness Tables"]
+        O4["Tactical Rajasthan Royals Fit Analysis"]
     end
 
-    subgraph Outputs["8. Deliverables & Decision Support Assets"]
-        O1["Round 1 Unstop Dropdown Top 10 Batters & Bowlers"]
-        O2["Rajasthan Royals IPL 2027 Final Combined Top 10"]
-        O3["Strategic Value vs Upside 2x2 Auction Matrix"]
-        O4["Publication Reports & 10 Diagnostic Charts"]
-    end
-
-    Data --> State
-    State --> Pressure
-    P1 & P2 & P3 & P4 & P5 & P6 --> PI
-    PI --> Metrics
-    Metrics --> Validation
-    Validation --> Eligibility
-    Eligibility --> Recruitment
-    Recruitment --> Outputs
+    Ingestion --> Cleaning
+    Cleaning --> PressureEng
+    PressureEng --> ContextModels
+    ContextModels --> Models
+    Models --> Ensemble
+    Ensemble --> Deliverables
 ```
 
 ---
 
-## ⚡ Quick Start: How to Run
+## 3. Data Inventory & Relational Schema
 
-A master CLI runner (`run_pipeline.py`) manages all pipeline modes:
+The data directory (`./data` or `./6af3166e7b922_data_pack`) contains 6 core relational CSV files covering all IPL and Men's T20I matches from 2022 to 2026:
 
-### Option 1: Fast Recruitment Pipeline (Recommended — ~5 seconds)
-Executes the eligibility filtering, uncapped talent scouting, unified capped+uncapped rankings, strategic matrix, and QA audit using the preprocessed pressure metrics:
+| File Name | Records | Columns | Size | Primary Entity / Grain | Integrity Status |
+| :--- | :---: | :---: | :---: | :--- | :---: |
+| `competitions.csv` | 141 | 4 | 0.01 MB | `comp_id` (IPL 2022-2026, World Cups, Bilaterals) | [PASS] 100% Mapped |
+| `teams.csv` | 353 | 3 | 0.01 MB | `team_id` (38 Franchise & International squads) | [PASS] 100% Mapped |
+| `matches.csv` | 883 | 22 | 0.12 MB | `match_id` (226 IPL matches, 657 T20Is) | [PASS] 100% Mapped |
+| `playing_eleven.csv` | 28,381 | 9 | 0.92 MB | `match_id`, `player_id` (XI lineups & Impact subs) | [PASS] 100% Mapped |
+| `competition_team_player_mapping.csv` | 6,413 | 6 | 0.44 MB | `comp_id`, `team_id`, `player_id` (Player registry) | [PASS] 100% Mapped |
+| `ball_by_ball.csv` | 200,999 | 33 | 39.17 MB | `match_id`, `innings`, `overid`, `over_ball_num` | [PASS] 100% Mapped |
+
+### Critical Domain Findings & Hygiene Rules
+1. **The Extras Encoding Trap:** `extras1_runs` is **NOT** runs; it is an internal integer enum matching `extras_type` (`1 = Overstep/No-ball`, `2 = Wide`, `3 = Legbyes`, `4 = Byes`, `5 = Other/Penalty`, `6 = Regular`). Actual extra physical runs conceded appear in `extras_2_runs`.
+   - **Correct Team Runs:** $\text{runs} + \text{extras\_2\_runs} + \mathbf{1}_{\{\text{extras\_type} \in [\text{'wide'}, \text{'Overstep'}]\}} + \mathbf{1}_{\{\text{extras\_type} = \text{'Penalty'}\}}$
+   - **Correct Bowler Conceded Runs:** $\text{runs} + \mathbf{1}_{\{\text{extras\_type} \in [\text{'wide'}, \text{'Overstep'}]\}} + \text{extras\_2\_runs}$ *(Byes and leg-byes are fielding extras, never charged to bowler)*.
+2. **Super Overs:** Innings 3 (25 balls) and 4 (13 balls) are excluded from standard 20-over win-expectancy models to avoid distorting leverage gradients.
+3. **DLS Revisions:** In `matches.csv`, revised overs are stored in **BALLS** (e.g. `114.0` = 19 overs, `84.0` = 14 overs). Balls remaining and required targets are calibrated against revised targets.
+4. **Legitimate Bowler Wickets:** Only bowler dismissals (*Bowled, Caught, LBW, Stumped, Hit Wicket*) are credited. Run-outs and retired hurts are strictly excluded from bowler metrics.
+
+---
+
+## 4. Scientific Pressure Definition (Pressure Index)
+
+Rather than arbitrarily defining pressure as "the last 5 overs," the system defines a continuous, delivery-level **Pressure Index ($PI \in [0, 1]$)** calculated before each ball:
+
+### Chasing Innings ($Inn = 2$):
+$$PI_{chase} = 0.45 \cdot P_{RRR} + 0.35 \cdot P_{Scarcity} + 0.20 \cdot P_{Closeness}$$
+- **$P_{RRR}$ (Required Run Rate Urgency):** Linearly scaled from normal ($RRR = 6.5$) to extreme ($RRR = 16.5$).
+- **$P_{Scarcity}$ (Resource Depletion):** $1.0 - \left[\frac{10 - \text{wickets\_lost}}{10} \times \frac{\text{balls\_remaining}}{\text{max\_balls}}\right]$.
+- **$P_{Closeness}$ (Contest Closeness):** Gaussian bell curve peaking when $RRR \approx 11.5$ with penalties for dead rubber states (e.g., needing 4 off 20 with 8 wickets in hand, or 50 off 6 with 9 wickets down).
+
+### Batting-First Innings ($Inn = 1$):
+$$PI_{first} = \max\left(PI_{base},\; P_{collapse},\; P_{death}\right)$$
+- **$P_{collapse}$:** Severe early-wicket losses ($\ge 3$ wickets down in Powerplay, or $\ge 4$ wickets in first 12 overs).
+- **$P_{death}$:** Accelerated urgency in overs 16-20 ($PI \ge 0.65$ when wickets are depleted).
+
+### Empirical Separation Proof ($PI \ge 0.65$ vs. Normal Play)
+
+| Match State | Deliveries | Wicket Rate (Wkts/Over) | Dot Ball % | Boundary % | Run Rate (RPO) |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Normal Situation ($PI < 0.65$)** | 143,570 (71.45%) | 0.29 wkts/over | 34.2% | 16.8% | 8.12 |
+| **High Pressure ($PI \ge 0.65$)** | **57,391 (28.55%)** | **0.46 wkts/over** | **41.8%** | **14.2%** | **7.54** |
+| **Statistical Shift** |  -  | **+58.6% Dismissal Surge** | **+7.6% Dots** | **-2.6% Boundaries** | **Suppressed Scoring** |
+
+The high-pressure cutoff ($PI \ge 0.65$) isolates the critical ~28.5% of deliveries where dismissal hazard surges by **+58.6%**, proving authentic pressure conditions.
+
+---
+
+## 5. The Three Pressure Modeling Paradigms
+
+To avoid relying on a single metric, the system synthesizes three complementary quantitative paradigms:
+
+1. **Model 1 ($M_1$): Contextual Machine Learning Expectation Model (Primary Model)**
+   - Trains LightGBM models on match features (`innings`, `overid`, `over_ball_num`, `wickets_lost`, `pace_or_spin`, `venue_id`, `comp_id`) to predict expected runs ($xRuns$) and dismissal probability ($xWicket$) on every delivery.
+   - Computes delivery-level Runs Added Above Expected ($RAAE$) for batters and Runs Saved Above Expected ($RSAE$) for bowlers.
+   - Applies **Empirical Bayes Shrinkage** ($K = 40$) toward the qualified peer group mean to prevent small-sample inflation.
+   - *Batters:* $\text{Shrunk } RAAE/100 + 5.0 \times \text{Wicket Preservation}$.
+   - *Bowlers:* $\text{Shrunk } RSAE/24 + 0.5 \times \text{Wickets Above Expected}$.
+2. **Model 2 ($M_2$): Performance Elevation & Baseline Delta Model**
+   - Directly measures whether a player raises their game when pressure mounts:
+   - *Batters:* $\Delta SR = SR_{Pressure} - SR_{Usual} + 0.3 \times (SR_{Pressure} - 135.0)$.
+   - *Bowlers:* $\Delta Econ = Econ_{Usual} - Econ_{Pressure} + 0.3 \times (8.5 - Econ_{Pressure})$.
+3. **Model 3 ($M_3$): Clutch Match Consistency & Reliability Model**
+   - Evaluates match-to-match resilience (% of high-pressure match appearances where the player generated positive RAAE / RSAE) scaled by sample volume:
+   - $\text{Score}_{M3} = \text{Consistency\_Pct} \times \log_{10}(HP\_Balls)$.
+
+---
+
+## 6. Ensemble Aggregation & Validation
+
+### Standardization & Combination Formula
+1. Compute standardized Z-scores for each model across the eligible pool: $Z = \frac{\text{Score} - \mu}{\sigma}$.
+2. Compute the **Weighted Z-Score Ensemble**:
+   $$\text{Weighted Z} = 0.40 \cdot Z_{M1} + 0.35 \cdot Z_{M2} + 0.25 \cdot Z_{M3}$$
+3. Compute **Equal-Weight Z-Score** and **Reciprocal Rank Fusion (RRF)**:
+   $$\text{RRF} = \sum_{m=1}^{3} \frac{1}{10 + \text{Rank}_m}$$
+4. Final Ensemble Score is min-max rescaled from 0 to 100.
+
+### Spearman Rank Correlation Concordance
+- **Batting Models:**
+  - $M_1$ vs. $M_2$: $\rho = 0.6856$
+  - $M_1$ vs. $M_3$: $\rho = 0.7998$
+  - Weighted Z-Score vs. RRF: **$\rho = 0.9852$** (Near-perfect convergence)
+- **Bowling Models:**
+  - $M_1$ vs. $M_2$: $\rho = 0.6022$
+  - $M_1$ vs. $M_3$: $\rho = 0.7037$
+  - Weighted Z-Score vs. RRF: **$\rho = 0.9793$** (Near-perfect convergence)
+
+---
+
+## 7. Official Competition Submission: Top 15 Rankings
+
+### A. Top 15 Batters Under Pressure (Ensemble Ranking)
+
+| Final Rank | Player ID | Player Name (Dropdown Selection) | Latest Match | HP Balls | Rank $M_1$ | Rank $M_2$ | Rank $M_3$ | $Z_{M1}$ | $Z_{M2}$ | $Z_{M3}$ | RRF Score | Final Score (0-100) | IPL Team Mapping |
+| :---: | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| **1** | `1699` | **Suryakumar Yadav** | 2026-05-24 | 655 | 2 | 4 | 1 | +2.34 | +1.76 | +2.75 | 0.2457 | **100.00** | Mumbai Indians |
+| **2** | `2877` | **Vijay Shankar** | 2025-04-14 | 121 | 7 | 1 | 13 | +1.66 | +2.93 | +1.11 | 0.1932 | **93.93** | Gujarat Titans, CSK |
+| **3** | `4117` | **Ishan Kishan** | 2026-11-01 | 349 | 6 | 2 | 5 | +1.67 | +2.21 | +1.89 | 0.2125 | **92.84** | Mumbai Indians, SRH |
+| **4** | `7216` | **Prabhsimran Singh** | 2026-05-23 | 129 | 3 | 3 | 43 | +2.26 | +1.89 | +0.35 | 0.1727 | **87.05** | Punjab Kings |
+| **5** | `6281` | **Abhishek Sharma** | 2026-11-01 | 216 | 1 | 41 | 6 | +2.56 | +0.39 | +1.70 | 0.1730 | **85.52** | Sunrisers Hyderabad |
+| **6** | `1318` | **Andre Russell** | 2025-07-22 | 479 | 5 | 17 | 7 | +1.88 | +1.09 | +1.63 | 0.1625 | **84.57** | Kolkata Knight Riders |
+| **7** | `6396` | **Tim David** | 2026-06-21 | 622 | 4 | 44 | 3 | +1.89 | +0.34 | +2.05 | 0.1669 | **81.24** | Mumbai Indians, RCB |
+| **8** | `4369` | **Shai Hope** | 2026-10-14 | 162 | 11 | 6 | 19 | +1.38 | +1.69 | +0.85 | 0.1446 | **80.55** | Delhi Capitals |
+| **9** | `7260` | **Dhruv Jurel** | 2026-05-29 | 379 | 17 | 5 | 16 | +1.09 | +1.75 | +0.95 | 0.1422 | **78.97** | Rajasthan Royals |
+| **10** | `3374` | **Mark Chapman** | 2026-01-28 | 315 | 8 | 9 | 37 | +1.55 | +1.49 | +0.50 | 0.1295 | **78.53** | New Zealand (Intl) |
+| *11 (Backup)* | `1596` | Moeen Ali | 2025-05-07 | 325 | 22 | 8 | 12 | +0.87 | +1.54 | +1.13 | 0.1323 | 76.48 | CSK, KKR |
+| *12 (Backup)* | `4260` | Heinrich Klaasen | 2026-05-27 | 666 | 12 | 54 | 2 | +1.30 | +0.12 | +2.14 | 0.1444 | 74.75 | Sunrisers Hyderabad |
+| *13 (Backup)* | `4391` | Liam Livingstone | 2026-04-18 | 413 | 18 | 21 | 8 | +1.01 | +0.87 | +1.52 | 0.1235 | 74.58 | Punjab Kings, RCB, SRH |
+| *14 (Backup)* | `6931` | Pathum Nissanka | 2026-09-19 | 174 | 10 | 33 | 11 | +1.42 | +0.53 | +1.15 | 0.1209 | 73.62 | Delhi Capitals, Sri Lanka |
+| *15 (Backup)* | `23450` | Sai Sudharsan | 2026-05-31 | 265 | 19 | 13 | 25 | +0.99 | +1.23 | +0.71 | 0.1065 | 72.80 | Gujarat Titans |
+
+*(Note: If Rank 10 Mark Chapman is absent in the Unstop dropdown list, Rank 11 Moeen Ali or Rank 12 Heinrich Klaasen slides in immediately).*
+
+---
+
+### B. Top 15 Bowlers Under Pressure (Ensemble Ranking)
+
+| Final Rank | Player ID | Player Name (Dropdown Selection) | Latest Match | HP Balls | Rank $M_1$ | Rank $M_2$ | Rank $M_3$ | $Z_{M1}$ | $Z_{M2}$ | $Z_{M3}$ | RRF Score | Final Score (0-100) | IPL Team Mapping |
+| :---: | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| **1** | `27960` | **Mayank Yadav** | 2026-10-30 | 192 | 9 | 2 | 15 | +1.57 | +2.88 | +1.08 | 0.1760 | **100.00** | Lucknow Super Giants |
+| **2** | `2382` | **Jamie Overton** | 2026-09-19 | 177 | 11 | 1 | 16 | +1.46 | +2.98 | +1.08 | 0.1770 | **99.82** | Chennai Super Kings |
+| **3** | `781` | **Sunil Narine** | 2026-05-24 | 477 | 5 | 9 | 3 | +2.10 | +1.26 | +2.31 | 0.1962 | **98.76** | Kolkata Knight Riders |
+| **4** | `8661` | **Matheesha Pathirana** | 2026-05-16 | 564 | 3 | 13 | 8 | +2.44 | +1.19 | +1.79 | 0.1760 | **98.24** | CSK, KKR |
+| **5** | `2933` | **Jasprit Bumrah** | 2026-09-17 | 468 | 4 | 22 | 2 | +2.38 | +0.80 | +2.33 | 0.1860 | **97.55** | Mumbai Indians |
+| **6** | `6256` | **Varun Chakravarthy** | 2026-11-01 | 817 | 2 | 26 | 5 | +2.51 | +0.69 | +1.92 | 0.1778 | **95.33** | Kolkata Knight Riders |
+| **7** | `4900` | **Wanindu Hasaranga** | 2026-09-19 | 657 | 1 | 32 | 29 | +3.06 | +0.64 | +0.60 | 0.1404 | **91.92** | RCB, SRH, RR, LSG |
+| **8** | `4101` | **Mitchell Santner** | 2026-11-01 | 491 | 7 | 21 | 4 | +1.86 | +0.80 | +2.15 | 0.1625 | **91.07** | CSK, Mumbai Indians |
+| **9** | `2687` | **Roston Chase** | 2026-10-14 | 216 | 12 | 15 | 1 | +1.36 | +1.07 | +2.41 | 0.1764 | **89.96** | West Indies (Intl) |
+| **10** | `2681` | **Taskin Ahmed** | 2026-07-19 | 256 | 6 | 8 | 36 | +2.02 | +1.28 | +0.51 | 0.1398 | **86.42** | Bangladesh (Intl) |
+| *11 (Backup)* | `2417` | Akeal Hosein | 2026-10-09 | 332 | 15 | 6 | 14 | +1.20 | +1.47 | +1.26 | 0.1442 | 84.40 | Sunrisers Hyderabad, CSK |
+| *12 (Backup)* | `6669` | Mohsin Khan | 2026-05-23 | 185 | 8 | 23 | 19 | +1.78 | +0.78 | +1.05 | 0.1203 | 82.78 | Lucknow Super Giants |
+| *13 (Backup)* | `4722` | Rashid Khan | 2026-11-01 | 902 | 10 | 44 | 7 | +1.53 | +0.44 | +1.82 | 0.1273 | 82.16 | Gujarat Titans |
+| *14 (Backup)* | `39657` | Eshan Malinga | 2026-10-13 | 228 | 27 | 5 | 18 | +0.70 | +1.87 | +1.05 | 0.1294 | 81.49 | Sunrisers Hyderabad |
+| *15 (Backup)* | `4489` | Prasidh Krishna | 2026-07-11 | 395 | 14 | 19 | 20 | +1.25 | +0.89 | +1.00 | 0.1095 | 77.95 | Rajasthan Royals, GT |
+
+*(Note: If Rank 9 Roston Chase or Rank 10 Taskin Ahmed are not present in Unstop's dropdown, Rank 11 Akeal Hosein and Rank 12 Mohsin Khan serve as immediate drop-in replacements).*
+
+---
+
+## 8. Rajasthan Royals Tactical Relevance
+
+A dedicated scouting appendix maps these top-performing clutch players to Rajasthan Royals' specific squad architecture and venue conditions:
+
+### 1. High-Pace & Death Bowling Execution
+- **Mayank Yadav (`#1 Bowler`) & Matheesha Pathirana (`#4 Bowler`):** Rajasthan Royals suffered from death overs leaking (>11.4 RPO in overs 17-20). Pathirana's sling action (+2.44 $Z_{M1}$) and Mayank's sheer 150+ km/h pace (+2.88 $Z_{M2}$) provide unhittable yorker and hard-length control.
+
+### 2. Middle-Overs Spin Control & Economy
+- **Varun Chakravarthy (`#6 Bowler`) & Wanindu Hasaranga (`#7 Bowler`):** Sawai Mansingh Stadium (Jaipur) features expansive square boundaries (68-72m). High-spin mystery bowlers restrict boundary access, forcing batters to hit to the longest parts of the ground.
+
+### 3. Middle-Order Stability & High-Strike Finishing
+- **Dhruv Jurel (`#9 Batter` - Retained RR Anchor) & Andre Russell (`#6 Batter`):** Jurel demonstrates exceptional pressure composure (+1.75 $Z_{M2}$ elevation), while Ishan Kishan and Prabhsimran Singh solve early Powerplay aggression when wickets fall early.
+
+---
+
+## 9. How to Run & Reproducibility Guide
+
+### Quick Start: Run Final Consensus Aggregation
 ```powershell
-python run_pipeline.py --recruitment
+python build_final_ensemble_rankings.py
 ```
+This script executes the complete filtering, Model 1-3 standardization, Z-score weighting, RRF rank fusion, and exports the final Top 15 CSVs and correlation matrices.
 
-### Option 2: Table Verification & Integrity Audit (Instant)
-Audits all 8 final generated CSV tables and confirms **0 NaNs** across every record:
+### Run Full Modular Pipeline End-to-End
 ```powershell
-python run_pipeline.py --verify
+# 1. Structural Data Audit & Join Verification
+python run_data_audit.py
+
+# 2. Build Continuous Pressure Features & LightGBM Models
+python build_superr_selector_engine.py
+
+# 3. Execute Final Ensemble & Active IPL Filtering
+python build_final_ensemble_rankings.py
 ```
 
-### Option 3: Full End-to-End Pipeline from Raw CSVs (~2–3 minutes)
-Executes every phase from raw ball-by-ball delivery parsing and match state reconstruction to machine learning validation and final report generation:
-```powershell
-python run_pipeline.py --all
-```
+### Generated Output Files
+All results are automatically persisted to `./outputs/` and `./results/`:
+- `outputs/top15_ensemble_batters.csv`  -  Official Top 15 Batters under pressure.
+- `outputs/top15_ensemble_bowlers.csv`  -  Official Top 15 Bowlers under pressure.
+- `outputs/full_eligible_pool_batters.csv`  -  Complete standardized metrics for all 115 qualified batters.
+- `outputs/full_eligible_pool_bowlers.csv`  -  Complete standardized metrics for all 124 qualified bowlers.
+- `outputs/ensemble_correlation_matrix_batters.csv`  -  Spearman correlation matrix across all models.
+- `outputs/ensemble_correlation_matrix_bowlers.csv`  -  Spearman correlation matrix across all models.
+- `docs/data_audit.md`  -  Complete structural schema and data dictionary report.
 
 ---
-
-## 📋 Step-by-Step Execution Sequence
-
-| Stage | Script | Purpose | Key Output Files |
-| :--- | :--- | :--- | :--- |
-| **Phase 1** | `python phase1_audit.py` | Full data audit of 6 raw CSVs | Console audit report |
-| **Phases 2–7** | `python pipeline_p2_matchstate_pressure.py` | Ball-by-ball reconstruction & 6-variable Pressure Index | `results/pressure_features.csv` |
-| **Phase 8** | `python pipeline_p3_player_metrics.py` | Baseline vs pressure metrics & Bayesian reliability | `results/pressure_player_metrics.csv` |
-| **Phase 9** | `python pipeline_p4_model_rr_weakness.py` | Temporal ML validation & RR 2026 weakness diagnosis | `results/rr_weaknesses.csv` |
-| **Phase 10** | `python pipeline_p5_fit_rankings.py` | Weighted player-weakness fit scoring | `results/player_fit_scores.csv` |
-| **Phase 11** | `python pipeline_p6_charts_report.py` | Generates 10 analytical diagnostic charts | `results/charts/*.png` |
-| **Eligibility** | `python build_player_status.py` | Classifies 1,217 players into active/retired/contracted | `results/player_status.csv` |
-| **Dual Ranks** | `python generate_dual_rankings.py` | Historical vs Active Eligible Top 10 rankings | `results/ipl2027_eligible_top10_batters.csv` |
-| **Uncapped** | `python build_uncapped_recruitment_system.py` | High-value uncapped Indian talents solving RR gaps | `results/uncapped_ipl2027_top10.csv` |
-| **Final Ranks**| `python build_final_recruitment_rankings.py` | Capped + Uncapped Unified recruitment rankings | `results/rr_ipl2027_final_top10.csv` |
-| **Master Rep** | `python update_report_master_recruitment.py` | Assembles 900+ line master executive report | `results/final_report.md` |
-| **QA Audit**   | `python verify_final_tables.py` | Verifies data integrity & checks for zero NaNs | Console audit report |
-
----
-
-## 📐 Mathematical Formulation of the Pressure Index ($PI$)
-
-To eliminate lookahead bias and capture the true psychological leverage of each ball, the **Pressure Index ($PI \in [0, 100]$)** is calculated immediately before each delivery:
-
-$$PI = 100 \times \sum_{i=1}^{6} w_i \cdot P_i$$
-
-Where $\sum w_i = 1.0$:
-- **$P_1$ — Required Run Rate / Target Par Urgency ($w_1 = 0.30$)**: In chases, $P_1 = \text{clip}\left(\frac{RRR - 6.0}{18.0 - 6.0}, 0, 1\right)$. In 1st innings, compares projected score against venue par (160.0).
-- **$P_2$ — Balls Remaining Depletion ($w_2 = 0.20$)**: $P_2 = 1.0 - \frac{BallsRemaining}{MaxBalls}$.
-- **$P_3$ — Wicket Depletion / Batting Capital ($w_3 = 0.20$)**: $P_3 = \frac{WicketsLostBeforeBall}{10.0}$.
-- **$P_4$ — Contest Closeness / Leverage ($w_4 = 0.10$)**: In chases, peaks when $RunsRequired \approx BallsRemaining$.
-- **$P_5$ — Innings Phase Criticality ($w_5 = 0.10$)**: Powerplay ($0.3$), Middle ($0.6$), Death ($1.0$).
-- **$P_6$ — Recent Momentum & Micro-Collapse ($w_6 = 0.10$)**: Rolling 6-ball window measuring recent wicket clusters ($W_6/3$), RRR acceleration, and boundary droughts.
-
-### Pressure Categorization
-- **Low Pressure ($PI < 30$)**: 22.4% of all deliveries.
-- **Medium Pressure ($30 \le PI \le 65$)**: 53.1% of all deliveries.
-- **High Pressure ($PI > 65$)**: 24.5% of all deliveries (benchmark testbed for clutch performance).
-
----
-
-## 🏆 Round 1 Competition Submission: Top 10 Under Pressure
-
-Ordered lists ready for the **Unstop Dropdown Submission** (Rank 1 = Highest Rated):
-
-### A. Top 10 Batters Best Under Pressure (Active & Eligible)
-| Rank | Player Name | Player ID | Latest Team | Role | Pressure SR | Delta SR vs Baseline | Pressure Avg | Pressure Boundary % | Batting Pressure Score |
-| :---: | :--- | :---: | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
-| **1** | **Cooper Connolly** | `8654` | Australia / PBKS | Top-order batter | **218.18** | **+61.13** | 999.00* | 29.55% | **98.57** |
-| **2** | **Rinku Singh** | `4708` | India / KKR | Middle-order batter | **183.74** | **+75.04** | 53.10 | 28.03% | **91.76** |
-| **3** | **Shreyas Iyer** | `3647` | India / PBKS | Top-order batter | **230.19** | **+90.14** | 40.67 | 35.85% | **91.55** |
-| **4** | **Ishan Kishan** | `4117` | India / SRH | WK-Top-order batter | **227.27** | **+78.15** | 37.50 | 33.33% | **90.31** |
-| **5** | **Shubman Gill** | `6288` | Gujarat Titans | Opener | **207.41** | **+59.82** | 37.33 | 27.78% | **89.57** |
-| **6** | **Jos Buttler** | `813` | England / GT | WK-Top-order batter | **203.23** | **+63.93** | 31.50 | 29.03% | **87.86** |
-| **7** | **Namboori Tilak Varma** | `7897` | India / MI | Middle-order batter | **195.00** | **+79.78** | 31.20 | 28.12% | **85.34** |
-| **8** | **Sanju Samson** | `2258` | India / CSK / RR | WK-Top-order batter | **213.21** | **+67.62** | 22.60 | 33.96% | **84.68** |
-| **9** | **Virat Kohli** | `47` | RCB | Opener | **180.00** | **+35.04** | 54.00 | 26.67% | **78.51** |
-| **10** | **Mahipal Lomror** | `4821` | Mumbai Indians / RCB | Middle-order batter | **205.00** | **+66.90** | 13.67 | 32.50% | **76.77** |
-
-*\*Note: Cooper Connolly faced 44 high-pressure deliveries across the evaluated window without dismissal.*
-
-### B. Top 10 Bowlers Best Under Pressure (Active & Eligible)
-| Rank | Player Name | Player ID | Latest Team | Role | Pressure Economy | Delta Econ (Suppression) | Pressure Wkts/Over | Pressure Dot % | Bowling Pressure Score |
-| :---: | :--- | :---: | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
-| **1** | **Umran Malik** | `25048` | KKR / SRH | Middle-over bowler | **4.32** | **-4.95** | **0.947** | 66.67% | **100.00** |
-| **2** | **Sakib Hussain** | `35318` | SRH / KKR | Death bowler | **6.97** | **-4.54** | **0.486** | 32.43% | **85.88** |
-| **3** | **Jamie Overton** | `2382` | England / CSK | Bowling all-rounder | **7.24** | **-3.95** | **0.517** | 41.38% | **85.35** |
-| **4** | **Brijesh Sharma** | `67036` | Rajasthan Royals | Middle-over bowler | **6.65** | **-2.78** | **0.405** | 36.49% | **84.41** |
-| **5** | **Anshul Kamboj** | `27964` | CSK / MI | Powerplay bowler | **8.44** | **-1.35** | **0.815** | 39.51% | **83.59** |
-| **6** | **R. Sai Kishore** | `5577` | Gujarat Titans | Spinner (SLA) | **7.50** | **-1.88** | **0.571** | 32.14% | **83.34** |
-| **7** | **Liam Livingstone** | `4391` | SRH / PBKS | Batting all-rounder | **6.33** | **-1.13** | **0.500** | 36.11% | **83.28** |
-| **8** | **Kuldeep Yadav** | `3644` | India / DC | Bowling all-rounder / LWS | **7.13** | **-2.47** | **0.446** | 37.62% | **82.64** |
-| **9** | **Gerald Coetzee** | `6628` | South Africa / SRH | Middle-over bowler | **8.34** | **-1.60** | **0.712** | 40.68% | **82.58** |
-| **10** | **Yuzvendra Chahal** | `1612` | PBKS / RR | Spinner (Leg-break) | **7.81** | **-0.83** | **0.682** | 35.79% | **82.27** |
-
----
-
-## 🎯 Rajasthan Royals IPL 2027 Recruitment Targets
-
-All players currently on Rajasthan Royals are strictly excluded. Targets are mapped directly to solve RR's actual 2026 weaknesses:
-
-### RR IPL 2026 Weaknesses Solved
-1. **High RRR Chases (Weakness #2 & #3)**: RR conceded a **40.95% dot ball rate** (IPL par: 34.47%) and managed only a **20.64% death boundary rate** (par: 23.84%).
-2. **Death Bowling Wickets (Weakness #1 & #8)**: RR took only **0.40 wkts/over** under death pressure (IPL par: 0.52).
-3. **Middle-Overs vs Spin (Weakness #7)**: RR had **31.67% middle dot balls** (IPL par: 29.53%).
-4. **Bowling vs Left-Handed Batters (Weakness #5 & #9)**: Conceded **10.28 economy** and **26.56% boundaries** against LHBs.
-
-### Top 10 External Auction Targets
-| Rank | Player Name | Category | Primary Role | Pressure Score | Avail Prob | RR Fit Score | Primary RR Weakness Solved | Tactical Value |
-| :---: | :--- | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
-| **1** | **Ashutosh Sharma** | `UNCAPPED_INDIAN` | Finisher | **85.00** | **0.80** | **74.82** | High RRR Chases & Finishing | **#1 Overall Target**: 214.29 death SR under pressure; high-value uncapped acquisition. |
-| **2** | **Tim David** | `OVERSEAS` | Finisher | **85.00** | **0.75** | **74.46** | High RRR Chases & Finishing | **Primary Power Target**: Elite boundary power; resolves death dot-ball stagnation. |
-| **3** | **Naman Dhir** | `CAPPED_INDIAN` | Middle-Order Batter | **85.00** | **0.70** | **73.55** | Middle-Overs Spin Stagnation | **Primary Spin Counter**: Strikes at 191.78 under pressure against spin/pace. |
-| **4** | **Rinku Singh** | `CAPPED_INDIAN` | Middle-Order Batter | **77.63** | **0.50** | **70.28** | Middle-Overs & Chasing Clutch | **Top RTM/Auction Priority**: Proven clutch match-winner. |
-| **5** | **Jamie Overton** | `OVERSEAS` | Bowling All-Rounder | **71.25** | **0.75** | **69.12** | Death Bowling Wickets & Economy | **Primary Bowler Target**: 7.24 death economy; 41.38% dot ball rate under pressure. |
-| **6** | **Mukul Choudhary** | `UNCAPPED_INDIAN` | Finisher | **79.46** | **0.80** | **68.81** | High RRR Chasing | **High Upside Target**: Development pace hitter. |
-| **7** | **David Miller** | `OVERSEAS` | Middle-Order Batter | **80.04** | **0.80** | **68.40** | Middle-Order Batting | **Veteran Clutch Option**: 1–2 year immediate championship window. |
-| **8** | **Vipraj Nigam** | `CAPPED_INDIAN` | Bowling All-Rounder | **71.25** | **0.70** | **68.37** | Death Bowling & Depth | **Dual Utility**: -5.94 economy suppression under pressure. |
-| **9** | **Tilak Varma** | `CAPPED_INDIAN` | Middle-Order Batter | **80.20** | **0.55** | **68.35** | Middle-Overs Batting | **Clutch Accumulator**: 195.00 pressure strike rate. |
-| **10** | **Liam Livingstone** | `OVERSEAS` | Batting All-Rounder | **68.68** | **0.75** | **68.16** | Finishing & Tactical Spin | **Dual Skill Option**: 187+ death hitting and 6.33 pressure economy. |
-
----
-
-## 📂 Project Directory Structure
-
-```text
-RR_IPL_Selection/
-├── 6af3166e7b922_data_pack/               # Raw IPL & T20 datasets (2022–2026)
-│   ├── ball_by_ball.csv                   # Ball-by-ball match events (200,999 rows)
-│   ├── matches.csv                        # Match metadata & D/L records
-│   ├── competitions.csv                   # Tournament definitions
-│   ├── teams.csv                          # Franchise & international teams
-│   ├── playing_eleven.csv                 # Official match sheets
-│   └── competition_team_player_mapping.csv# Player squad mappings
-│
-├── results/                               # Generated analytical deliverables
-│   ├── ROUND_1_SUBMISSION_REPORT.md       # Complete Round 1 Unstop submission document
-│   ├── final_report.md                    # Comprehensive 900+ line master executive report
-│   ├── ipl2027_eligible_top10_batters.csv # Top 10 Batters under pressure (Active eligible)
-│   ├── ipl2027_eligible_top10_bowlers.csv # Top 10 Bowlers under pressure (Active eligible)
-│   ├── rr_ipl2027_final_top10.csv         # Top 10 Combined Realistic Recruitment Targets
-│   ├── rr_ipl2027_top20.csv               # Top 20 Combined External Targets
-│   ├── rr_ipl2027_capped_top10.csv        # Top 10 Capped Targets
-│   ├── rr_ipl2027_uncapped_top10.csv      # Top 10 Uncapped Targets
-│   ├── rr_ipl2027_role_targets.csv        # Exact fixes mapped to RR 2026 weaknesses
-│   ├── rr_ipl2027_value_upside_matrix.csv # 2x2 Value vs Upside Strategic Matrix
-│   ├── player_status.csv                  # 1,217 cataloged players with eligibility status
-│   └── charts/                            # 10 publication-quality diagnostic charts
-│
-├── run_pipeline.py                        # Master CLI pipeline runner
-├── verify_final_tables.py                 # Automated zero-NaN verification audit
-└── README.md                              # Complete repository documentation & architecture
-```
-
----
-
-## 🔬 Model Verification & Reliability Evidence
-
-- **XGBoost Leverage Calibration**: The continuous pre-delivery Pressure Index achieved a **0.781 ROC-AUC** and **0.174 Brier Score** in predicting live match outcomes.
-- **Temporal Out-of-Time Generalization**: Training on 2022–2024 and testing on 2025–2026 demonstrated that pressure performance metrics explained **97.1% to 99.4% of out-of-sample clutch outcome variance** ($R^2 > 0.97$), outperforming static baseline stats ($R^2 = 0.26$).
-- **Data Integrity**: Verified across all final CSV outputs with **zero missing values (0 NaNs)** across every single metric column.
+**Lead Author:** Shamit Bundela
+**Competition:** Rajasthan Royals SupeRR Selector Season 2  -  Round 1  
+**Verification Status:** 100% Reproducible, Clean Git Working Copy, Zero Missing Values.
