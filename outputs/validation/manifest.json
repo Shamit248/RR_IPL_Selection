@@ -1,0 +1,140 @@
+{
+  "competition": "Rajasthan Royals SupeRR Selector Season 2",
+  "round": "Round 1",
+  "author": "Shamit Bundela",
+  "date": "November 2026",
+  "random_seed": 42,
+  "python_version": "3.13.5",
+  "input_data_hashes": {
+    "ball_by_ball.csv": "a3926f49d2c684dca2a5d2de535a02c5ee46ea654ca1e79dd31c69e7544e9889",
+    "matches.csv": "bb100ab84b8b9a15160c1f2315cf675210131a30e779ec5079fd5403dcf56eef",
+    "competitions.csv": "507ceb7189f972d4e4f299ddcfc97f3c3247af1913f6291106f161fa8353fd9b",
+    "teams.csv": "a65e5922a9b3bf49247b24fc9471782e700efb31f8dcc5042923238b87c50a5d",
+    "playing_eleven.csv": "7517c73722a28d5d61c808ccf0cbed315a8780586d02e946eb9a7f5daf011c27",
+    "competition_team_player_mapping.csv": "1ded4e42a933618572d6e2c3a521c3257eb1844fab4456d567d77cbb2d3bbb12"
+  },
+  "final_top10_batters_ipl": [
+    {
+      "rank": 1,
+      "striker_id": 1699,
+      "player_name": "Suryakumar Yadav",
+      "final_ensemble_score": 100.0
+    },
+    {
+      "rank": 2,
+      "striker_id": 4117,
+      "player_name": "Ishan Kishan",
+      "final_ensemble_score": 93.04
+    },
+    {
+      "rank": 3,
+      "striker_id": 7216,
+      "player_name": "Prabhsimran Singh",
+      "final_ensemble_score": 87.22
+    },
+    {
+      "rank": 4,
+      "striker_id": 6281,
+      "player_name": "Abhishek Sharma",
+      "final_ensemble_score": 85.28
+    },
+    {
+      "rank": 5,
+      "striker_id": 1318,
+      "player_name": "Andre Russell",
+      "final_ensemble_score": 84.55
+    },
+    {
+      "rank": 6,
+      "striker_id": 6396,
+      "player_name": "Tim David",
+      "final_ensemble_score": 81.04
+    },
+    {
+      "rank": 7,
+      "striker_id": 4369,
+      "player_name": "Shai Hope",
+      "final_ensemble_score": 80.72
+    },
+    {
+      "rank": 8,
+      "striker_id": 7260,
+      "player_name": "Dhruv Jurel",
+      "final_ensemble_score": 79.2
+    },
+    {
+      "rank": 9,
+      "striker_id": 4391,
+      "player_name": "Liam Livingstone",
+      "final_ensemble_score": 74.59
+    },
+    {
+      "rank": 10,
+      "striker_id": 4260,
+      "player_name": "Heinrich Klaasen",
+      "final_ensemble_score": 74.55
+    }
+  ],
+  "final_top10_bowlers_ipl": [
+    {
+      "rank": 1,
+      "bowler_id": 27960,
+      "player_name": "Mayank Yadav",
+      "final_ensemble_score": 100.0
+    },
+    {
+      "rank": 2,
+      "bowler_id": 2382,
+      "player_name": "Jamie Overton",
+      "final_ensemble_score": 99.82
+    },
+    {
+      "rank": 3,
+      "bowler_id": 781,
+      "player_name": "Sunil Narine",
+      "final_ensemble_score": 98.79
+    },
+    {
+      "rank": 4,
+      "bowler_id": 8661,
+      "player_name": "Matheesha Pathirana",
+      "final_ensemble_score": 98.27
+    },
+    {
+      "rank": 5,
+      "bowler_id": 2933,
+      "player_name": "Jasprit Bumrah",
+      "final_ensemble_score": 97.59
+    },
+    {
+      "rank": 6,
+      "bowler_id": 6256,
+      "player_name": "Varun Chakravarthy",
+      "final_ensemble_score": 95.36
+    },
+    {
+      "rank": 7,
+      "bowler_id": 4900,
+      "player_name": "Wanindu Hasaranga",
+      "final_ensemble_score": 91.93
+    },
+    {
+      "rank": 8,
+      "bowler_id": 4101,
+      "player_name": "Mitchell Santner",
+      "final_ensemble_score": 91.1
+    },
+    {
+      "rank": 9,
+      "bowler_id": 2417,
+      "player_name": "Akeal Hosein",
+      "final_ensemble_score": 84.41
+    },
+    {
+      "rank": 10,
+      "bowler_id": 6669,
+      "player_name": "Mohsin Khan",
+      "final_ensemble_score": 82.8
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+Candidate_Approach,Batters_HeldOut_RAAE_100,Bowlers_HeldOut_RSAE_24,Rank_Correlation_With_HeldOut,Outcome
+Consensus Ensemble (Top 10 Picks),24.41,6.81,0.582,WINNER (Highest held-out predictive value)
+Model 1 Only (Contextual ML),21.01,6.16,0.531,"Solid anchor, but lower stability than ensemble"
+Model 2 Only (Delta Elevation),18.61,5.69,0.442,High variance; penalizes elite baselines
+Model 3 Only (Consistency %),19.51,5.83,0.489,Under-rewards acute rate spikes
+Naive Death SR / Economy Baseline,16.31,4.51,0.353,Context-blind; misranks unadjusted volumes
+Eligible Cohort Population Average,-5.19,0.85,0.0,Population Baseline
+"Random Top-10 Baseline (1,000 Draws)",-5.3,0.84,-0.012,Benchmark Floor

@@ -1,0 +1,28 @@
+# Rajasthan Royals SupeRR Selector Season 2 - Round 1
+# Pipeline Configuration & Model Hyperparameters
+
+primary_model: "model_1"
+
+weights:
+  model_1: 0.40   # Contextual ML Expectation Model (RAAE/100, RSAE/24 + Wickets, Empirical Bayes K=40)
+  model_2: 0.35   # Rate Elevation & Baseline Delta Model (Delta SR, Delta Economy)
+  model_3: 0.25   # Clutch Match Consistency & Reliability Model (Consistency % x log(HP balls))
+
+pressure:
+  pi_cutoff: 0.65 # High-pressure delivery threshold (top 28.55% leverage)
+  min_hp_balls: 120 # Minimum legal deliveries under pressure to qualify
+
+eligibility:
+  active_cutoff_date: "2025-01-01"
+  exclude_pakistan_only: true
+  retired_exclusion_list:
+    - "Dinesh Karthik"
+    - "Shikhar Dhawan"
+    - "Kieron Pollard"
+    - "Ambati Rayudu"
+    - "Suresh Raina"
+    - "Vijay Shankar"
+    - "Moeen Ali"
+
+reproducibility:
+  seed: 42

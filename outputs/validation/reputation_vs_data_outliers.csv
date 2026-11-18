@@ -1,0 +1,5 @@
+Player_Name,Role,HP_Balls,Final_Rank,Ensemble_Score,Metric_1,Metric_2,Diagnostic_Explanation
+Hardik Pandya,Batter,807,46,55.72,Pressure SR: 157.7,Delta SR: +27.8,Scoring rate suppression or negative Delta SR under pressure relative to league expectation.
+Arshdeep Singh,Bowler,935,20,67.59,Pressure Econ: 8.62,Delta Econ: -0.03,Elevated death boundary concession rate or negative RSAE/24 in high-leverage overs.
+Mitchell Starc,Bowler,176,86,41.08,Pressure Econ: 9.51,Delta Econ: -0.45,Elevated death boundary concession rate or negative RSAE/24 in high-leverage overs.
+Bhuvneshwar Kumar,Bowler,559,41,59.49,Pressure Econ: 8.91,Delta Econ: -1.27,Elevated death boundary concession rate or negative RSAE/24 in high-leverage overs.

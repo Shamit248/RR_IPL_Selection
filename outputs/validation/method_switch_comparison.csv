@@ -1,0 +1,7 @@
+Role,Method,Top10_Overlap_Pct,Spearman_Rho
+Batters,Equal-Weight Z-Score,90.0,0.9971
+Batters,Borda Count (Mean Rank),100.0,0.9912
+Batters,Reciprocal Rank Fusion (RRF),90.0,0.9833
+Bowlers,Equal-Weight Z-Score,90.0,0.9958
+Bowlers,Borda Count (Mean Rank),80.0,0.9932
+Bowlers,Reciprocal Rank Fusion (RRF),90.0,0.9789
