@@ -1,1 +1,20 @@
 results/pressure_features.csv
+reports/
+report/
+presentation/
+results/charts/
+
+# Python cache & temporary binaries
+__pycache__/
+*.py[cod]
+*$py.class
+*.feather
+*.pkl
+
+# Office temporary lock files
+~$*.docx
+~$*.xlsx
+
+# Temporary test artifacts
+test_*.pdf
+

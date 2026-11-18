@@ -15,6 +15,27 @@ pressure:
 eligibility:
   active_cutoff_date: "2025-01-01"
   exclude_pakistan_only: true
+  exclude_rr_retained: false
+  rr_retained_list:
+    - "Riyan Parag"
+    - "Yashasvi Jaiswal"
+    - "Vaibhav Sooryavanshi"
+    - "Ravindra Jadeja"
+    - "Dhruv Jurel"
+    - "Jofra Archer"
+    - "Mohammed Shami"
+    - "Manimaran Siddharth"
+    - "Ravi Bishnoi"
+    - "Sandeep Sharma"
+    - "Nandre Burger"
+    - "Shubham Dubey"
+    - "Aman Rao Perala"
+    - "Dasun Shanaka"
+    - "Donovan Ferreira"
+    - "Lhuan-dre Pretorius"
+    - "Sushant Mishra"
+    - "Yash Punja"
+    - "Brijesh Sharma"
   retired_exclusion_list:
     - "Dinesh Karthik"
     - "Shikhar Dhawan"
@@ -26,3 +47,4 @@ eligibility:
 
 reproducibility:
   seed: 42
+

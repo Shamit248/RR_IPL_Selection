@@ -8,6 +8,11 @@
 
 > A statistically rigorous, reproducible cricket data science engine built for **Round 1 of Rajasthan Royals' SupeRR Selector Season 2**. Evaluates delivery-level leverage and contextual expectations across 200,999 IPL and T20 International deliveries (2022-2026), combines three distinct pressure modeling paradigms via consensus ensembling (Weighted Z-Score & Reciprocal Rank Fusion), and produces the authoritative **Top 10 Batters** and **Top 10 Bowlers** under pressure.
 
+**Author:** Shamit Bundela (Lead Quantitative Analyst)  
+**Contest:** Rajasthan Royals SupeRR Selector Season 2 (Round 1)  
+**Official Repository:** [https://github.com/Shamit248/RR_IPL_Selection](https://github.com/Shamit248/RR_IPL_Selection)  
+**Verification:** 100% Reproducible Pipeline (Exit Code 0)
+
 ---
 
 ## Table of Contents

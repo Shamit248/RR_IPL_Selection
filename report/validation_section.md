@@ -44,3 +44,4 @@ Top-order batters who bat into the death overs enter the pressure zone with sett
 3. Absence of Pitch and Dew Data:
 The tournament data pack records match date, venue, city, toss, and score progression, but contains no direct telemetry on surface characteristics (degrees of turn, pitch hardness, millimeter bounce) or evening atmospheric moisture (dew readings). While ground-level par scores adjust for venue scoring environments, localized conditions (such as severe evening dew during second innings at Barsapara Stadium in Guwahati) could not be modeled directly.
 - Verdict: CAUTION. Analysts must account for player entry points and physical venue conditions when translating these ratings into match tactical plans.
+
